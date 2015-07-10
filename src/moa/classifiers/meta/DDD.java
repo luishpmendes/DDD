@@ -59,6 +59,8 @@ public class DDD extends AbstractClassifier {
 	private double stdnh;
 	
 	private int ddmLevel;
+	
+	private int timeStep;
 
 	private double[] weightedMajority(double[] pnl, double[] pol, double[] poh, double wnl, double wol, double woh) {
 		double[] result = null;
@@ -97,7 +99,39 @@ public class DDD extends AbstractClassifier {
 	}
 	
 	private void update(Instance inst) {
-		
+		// Update(accnl, stdnl, hnl, d)
+		double accnlex = 0.0;
+		if (this.hnl.correctlyClassifies(inst)) {
+			accnlex = 1.0;
+		}
+		if (this.timeStep == 0) {
+			this.accnl = accnlex;
+		} else {
+			this.accnl = this.accnl + (accnlex - this.accnl)/(this.timeStep + 1.0);
+		}
+		// update stdnl
+		// Update(accol, stdol, hol, d)
+		double accolex = 0.0;
+		if (this.hol.correctlyClassifies(inst)) {
+			accolex = 1.0;
+		}
+		if (this.timeStep == 0) {
+			this.accol = accolex;
+		} else {
+			this.accol = this.accol + (accolex - this.accol)/(this.timeStep + 1.0);
+		}
+		// update stdol
+		// Update(accoh, stdoh, hoh, d)
+		double accohex = 0.0;
+		if (this.hoh.correctlyClassifies(inst)) {
+			accohex = 1.0;
+		}
+		if (this.timeStep == 0) {
+			this.accoh = accohex;
+		} else {
+			this.accoh = this.accoh + (accohex - this.accoh)/(this.timeStep + 1.0);
+		}
+		// update stdoh
 	}
 	
 	public double[] getVotesForInstance(Instance inst) {
@@ -110,7 +144,6 @@ public class DDD extends AbstractClassifier {
 			double wol = this.accol * this.W / sumacc;
 			double woh = this.accoh / sumacc;
 			result = this.weightedMajority(this.hnl.getVotesForInstance(inst), this.hol.getVotesForInstance(inst), this.hoh.getVotesForInstance(inst), wnl, wol, woh);
-			// this.update(inst); /* ??? */
 		}
 		return result;
 	}
@@ -152,6 +185,8 @@ public class DDD extends AbstractClassifier {
 		
 		/* standard deviations */
 		this.stdol = this.stdoh = this.stdnl = this.stdnh = 0;
+		
+		this.timeStep = 0;
 	}
 	
 	private void detectDrift(Instance inst) {
@@ -201,6 +236,8 @@ public class DDD extends AbstractClassifier {
 			this.hol.trainOnInstance(inst, this.pl); // EnsembleLearning(hol, d, pl)
 			this.hoh.trainOnInstance(inst, this.pl); // EnsembleLearning(hoh, d, pl)
 		}
+		
+		this.timeStep++;
 	}
 
     @Override
