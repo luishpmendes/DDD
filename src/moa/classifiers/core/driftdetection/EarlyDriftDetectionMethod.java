@@ -9,10 +9,9 @@ public class EarlyDriftDetectionMethod extends EDDM {
 	public FloatOption warningOption = new FloatOption("warning", 'w', "Value that determines whether the warning level is triggered.", 0.95, 0.0, 1.0);
 	public FloatOption outControlOption = new FloatOption("outControl", 'd', "Value that determines whether a drift is considered to be detected.", 0.90, 0.0, 1.0);
     public IntOption minNumInstancesOption = new IntOption("minNumInstances", 'n', "The minimum number of instances before permitting detecting change.", 30, 0, Integer.MAX_VALUE);
+    public IntOption minNumErrorsOption = new IntOption("minNumErrors", 'e', "The minimum number of errors before permitting detecting change.", 30, 0, Integer.MAX_VALUE);
 	
     private double m_numErrors;
-
-    private int m_minNumErrors = 30;
 
     private int m_n;
 
@@ -59,10 +58,10 @@ public class EarlyDriftDetectionMethod extends EDDM {
                 this.m_lastLevel = DDM_INCONTROL_LEVEL;
             } else {
                 double p = m2s / this.m_m2smax;
-                if (this.m_n > this.minNumInstancesOption.getValue() && this.m_numErrors > this.m_minNumErrors && p < this.outControlOption.getValue()) {
+                if (this.m_n > this.minNumInstancesOption.getValue() && this.m_numErrors > this.minNumErrorsOption.getValue() && p < this.outControlOption.getValue()) {
                     initialize();
                     return DDM_OUTCONTROL_LEVEL;
-                } else if (this.m_n > this.minNumInstancesOption.getValue() && this.m_numErrors > this.m_minNumErrors && p < this.warningOption.getValue()) {
+                } else if (this.m_n > this.minNumInstancesOption.getValue() && this.m_numErrors > this.minNumErrorsOption.getValue() && p < this.warningOption.getValue()) {
                     this.m_lastLevel = DDM_WARNING_LEVEL;
                     return DDM_WARNING_LEVEL;
                 } else {

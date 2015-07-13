@@ -1,23 +1,66 @@
 package moa.classifiers.meta;
 
-import moa.classifiers.Ensemble;
+import moa.classifiers.AbstractEnsemble;
+import moa.classifiers.Classifier;
+import moa.core.DoubleVector;
+import moa.core.Measurement;
 import moa.core.MiscUtils;
-import moa.options.FloatOption;
 import weka.core.Instance;
 
-public class OnlineBagging extends OzaBag implements Ensemble {
+public class OnlineBagging extends AbstractEnsemble {
 	private static final long serialVersionUID = 1L;
 
-	private double lambda;
-	public FloatOption lambdaOption = new FloatOption("lambda", 'l', "Parameter used by Poisson to encourage more or less diversity.", 1.0);
-
-	@Override
-    public void resetLearningImpl() {
-        super.resetLearningImpl();
-        this.lambda = lambdaOption.getValue();
+    @Override
+    public String getPurposeString() {
+        return "Modified version of incremental on-line bagging of Oza and Russell.";
     }
 
-	public void trainOnInstance(Instance inst, double lambda) {
+    @Override
+    public void resetLearningImpl() {
+        this.ensemble = new Classifier[this.ensembleSizeOption.getValue()];
+        Classifier baseLearner = (Classifier) getPreparedClassOption(this.baseLearnerOption);
+        baseLearner.resetLearning();
+        for (int i = 0; i < this.ensemble.length; i++) {
+            this.ensemble[i] = baseLearner.copy();
+        }
+    }
+
+    //@Override
+    public double[] getVotesForInstance(Instance inst) {
+        DoubleVector combinedVote = new DoubleVector();
+        for (int i = 0; i < this.ensemble.length; i++) {
+            DoubleVector vote = new DoubleVector(this.ensemble[i].getVotesForInstance(inst));
+            if (vote.sumOfValues() > 0.0) {
+                vote.normalize();
+                combinedVote.addValues(vote);
+            }
+        }
+        return combinedVote.getArrayRef();
+    }
+
+    //@Override
+    public boolean isRandomizable() {
+        return true;
+    }
+
+    @Override
+    public void getModelDescription(StringBuilder out, int indent) {
+        // TODO Auto-generated method stub
+    }
+
+    @Override
+    protected Measurement[] getModelMeasurementsImpl() {
+        return new Measurement[]{new Measurement("ensemble size",
+                    this.ensemble != null ? this.ensemble.length : 0)};
+    }
+
+    @Override
+    public Classifier[] getSubClassifiers() {
+        return this.ensemble.clone();
+    }
+
+	@Override
+	public void trainOnInstanceImpl(Instance inst, double lambda) {
 		for (int i = 0; i < this.ensemble.length; i++) {
             int k = MiscUtils.poisson(lambda, this.classifierRandom);
             if (k > 0) {
@@ -27,14 +70,4 @@ public class OnlineBagging extends OzaBag implements Ensemble {
             }
         }
 	}
-
-    @Override
-    public void trainOnInstanceImpl(Instance inst) {
-        this.trainOnInstance(inst, this.lambda);
-    }
-
-    @Override
-    public String getPurposeString() {
-        return "Modified version of incremental on-line bagging of Oza and Russell.";
-    }
 }

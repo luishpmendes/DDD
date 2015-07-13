@@ -9,43 +9,37 @@ import moa.core.Measurement;
 import moa.classifiers.core.driftdetection.DriftDetectionMethod;
 import moa.options.ClassOption;
 import moa.options.FloatOption;
-import moa.streams.InstanceStream;
 
 public class DDD extends AbstractClassifier {
 	private static final long serialVersionUID = 1L;
-	
+
 	public static final int BEFORE_DRIFT = 0;
 	public static final int AFTER_DRIFT = 1;
-	
+
 	/* multiplier constant W for weight of the old low diversity ensemble */
-	private double W;
 	public FloatOption weightOption = new FloatOption("weight", 'w', "multiplier constant for the weight of the old low diversity ensemble", 1.0);
-	
-	public ClassOption baseEnsembleLearnerOption = new ClassOption("baseEnsembleLearner", 'e', "Online ensemble learning algorithm.", Classifier.class, "meta.OnlineBagging");
-	
+
+	/* online ensemble learning algorithm EnsembleLearning; */
+	public ClassOption ensembleLearningOption = new ClassOption("baseEnsembleLearner", 'e', "Online ensemble learning algorithm.", Classifier.class, "meta.OnlineBagging");
+
 	/* parameter for ensemble learning with low diversity */
-	private double pl;
 	public FloatOption lowDiversityOption = new FloatOption("lowDiversity", 'l', "Parameter for ensemble learning with low diversity.", 2.0);
+
 	/* parameter for ensemble learning with high diversity */
-	private double ph;
 	public FloatOption highDiversityOption = new FloatOption("lowDiversity", 'l', "Parameter for ensemble learning with low diversity.", 0.005);
-	
+
 	/* drift detection method */
-	private DriftDetectionMethod driftDetectionMethod;
 	public ClassOption driftDetectionMethodOption = new ClassOption("driftDetectionMethodOption", 'd', "Drift detection method.", DriftDetectionMethod.class, "EarlyDriftDetectionMethod");
-	
-	/* data stream */
-	private InstanceStream stream; //??
 
 	/* online ensembles */
 	private Ensemble hnl; /* new low diversity */
 	private Ensemble hnh; /* new high diversity */
 	private Ensemble hol; /* old low diversity */
 	private Ensemble hoh; /* old high diversity */
-	
+
 	/* mode of operations */
 	private int mode;
-	
+
 	/* accuracies */
 	private double accol;
 	private double accoh;
@@ -57,14 +51,14 @@ public class DDD extends AbstractClassifier {
 	private double stdoh;
 	private double stdnl;
 	private double stdnh;
-	
+
 	private int ddmLevel;
-	
+
 	private int timeStep;
 
 	private double[] weightedMajority(double[] pnl, double[] pol, double[] poh, double wnl, double wol, double woh) {
 		double[] result = null;
-		
+
 		int length = pnl.length;
 		if (length < pol.length) {
 			length = pol.length;
@@ -72,9 +66,9 @@ public class DDD extends AbstractClassifier {
 		if (length < poh.length) {
 			length = poh.length;
 		}
-		
+
 		result = new double[length];
-		
+
 		for (int i = 0; i < length; i++) {
 			double totalw = 0;
 			result[i] = 0;
@@ -94,10 +88,10 @@ public class DDD extends AbstractClassifier {
 				result[i] /= totalw;
 			}
 		}
-		
+
 		return result;
 	}
-	
+
 	private void update(Instance inst) {
 		// Update(accnl, stdnl, hnl, d)
 		double accnlex = 0.0;
@@ -134,14 +128,39 @@ public class DDD extends AbstractClassifier {
 		// update stdoh
 	}
 	
+	private void detectDrift(Instance inst) {
+		int trueClass = (int) inst.classValue();
+		boolean prediction = false;
+		if (Utils.maxIndex(this.hnl.getVotesForInstance(inst)) == trueClass) {
+			prediction = true;
+		}
+		this.ddmLevel = ((DriftDetectionMethod) this.getPreparedClassOption(this.driftDetectionMethodOption)).computeNextVal(prediction);
+	}
+	
+	@Override
+	protected Measurement[] getModelMeasurementsImpl() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	@Override
+	public void getModelDescription(StringBuilder out, int indent) {
+		// TODO Auto-generated method stub
+	}
+	
+    @Override
+    public String getPurposeString() {
+        return "Diversity for Dealing with Drifts of Leandro L. Minku and Xin Yao.";
+    }
+
 	public double[] getVotesForInstance(Instance inst) {
 		double[] result = null;
 		if (this.mode == DDD.BEFORE_DRIFT) {
 			result = this.hnl.getVotesForInstance(inst); /* prediction ← hnl(d) */
 		} else {
-			double sumacc = this.accnl + this.accol + this.W * this.accoh;
+			double sumacc = this.accnl + this.accol + this.weightOption.getValue() * this.accoh;
 			double wnl = this.accnl / sumacc;
-			double wol = this.accol * this.W / sumacc;
+			double wol = this.accol * this.weightOption.getValue() / sumacc;
 			double woh = this.accoh / sumacc;
 			result = this.weightedMajority(this.hnl.getVotesForInstance(inst), this.hol.getVotesForInstance(inst), this.hoh.getVotesForInstance(inst), wnl, wol, woh);
 		}
@@ -153,49 +172,21 @@ public class DDD extends AbstractClassifier {
 	}
 
 	@Override
-	public void getModelDescription(StringBuilder out, int indent) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	protected Measurement[] getModelMeasurementsImpl() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public void resetLearningImpl() {
-		this.W = this.weightOption.getValue();
-		
-		this.pl = this.lowDiversityOption.getValue();
-		this.ph = this.highDiversityOption.getValue();
-		
-		this.driftDetectionMethod = (DriftDetectionMethod) this.getPreparedClassOption(this.driftDetectionMethodOption);
-		
 		this.mode = DDD.BEFORE_DRIFT;
 
-		this.hnl = (Ensemble) this.getPreparedClassOption(this.baseEnsembleLearnerOption); /* new low diversity */
-		this.hnh = (Ensemble) this.getPreparedClassOption(this.baseEnsembleLearnerOption); /* new high diversity */
+		this.hnl = (Ensemble) this.getPreparedClassOption(this.ensembleLearningOption); /* new low diversity */
+		this.hnh = (Ensemble) this.getPreparedClassOption(this.ensembleLearningOption); /* new high diversity */
 		this.hol = null; /* old low diversity */
 		this.hoh = null; /* old high diversity */
-		
+
 		/* accuracies */
 		this.accol = this.accoh = this.accnl = this.accnh = 0;
-		
+
 		/* standard deviations */
 		this.stdol = this.stdoh = this.stdnl = this.stdnh = 0;
-		
+
 		this.timeStep = 0;
-	}
-	
-	private void detectDrift(Instance inst) {
-		int trueClass = (int) inst.classValue();
-		boolean prediction = false;
-		if (Utils.maxIndex(this.hnl.getVotesForInstance(inst)) == trueClass) {
-			prediction = true;
-		}
-		this.ddmLevel = this.driftDetectionMethod.computeNextVal(prediction);
 	}
 
 	@Override
@@ -213,8 +204,8 @@ public class DDD extends AbstractClassifier {
 				this.hol = this.hoh;
 			}
 			this.hoh = this.hnh;
-			this.hnl = (Ensemble) this.getPreparedClassOption(this.baseEnsembleLearnerOption);
-			this.hnh = (Ensemble) this.getPreparedClassOption(this.baseEnsembleLearnerOption);
+			this.hnl = (Ensemble) this.getPreparedClassOption(this.ensembleLearningOption);
+			this.hnh = (Ensemble) this.getPreparedClassOption(this.ensembleLearningOption);
 			this.accol = this.accoh = this.accnl = this.accnh = 0;
 			this.stdol = this.stdoh = this.stdnl = this.stdnh = 0;
 			this.mode = DDD.AFTER_DRIFT;
@@ -230,18 +221,13 @@ public class DDD extends AbstractClassifier {
 				}
 			}
 		}
-		this.hnl.trainOnInstance(inst, this.pl); // EnsembleLearning(hnl, d, pl)
-		this.hnh.trainOnInstance(inst, this.ph); // EnsembleLearning(hnh, d, ph)
+		this.hnl.trainOnInstance(inst, this.lowDiversityOption.getValue()); // EnsembleLearning(hnl, d, pl)
+		this.hnh.trainOnInstance(inst, this.highDiversityOption.getValue()); // EnsembleLearning(hnh, d, ph)
 		if (this.mode == DDD.AFTER_DRIFT) {
-			this.hol.trainOnInstance(inst, this.pl); // EnsembleLearning(hol, d, pl)
-			this.hoh.trainOnInstance(inst, this.pl); // EnsembleLearning(hoh, d, pl)
+			this.hol.trainOnInstance(inst, this.lowDiversityOption.getValue()); // EnsembleLearning(hol, d, pl)
+			this.hoh.trainOnInstance(inst, this.lowDiversityOption.getValue()); // EnsembleLearning(hoh, d, pl)
 		}
-		
+
 		this.timeStep++;
 	}
-
-    @Override
-    public String getPurposeString() {
-        return "Diversity for Dealing with Drifts of Leandro L. Minku and Xin Yao.";
-    }
 }
