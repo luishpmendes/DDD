@@ -10,7 +10,7 @@ public class EarlyDriftDetectionMethod extends EDDM {
 	public FloatOption outControlOption = new FloatOption("outControl", 'd', "Value that determines whether a drift is considered to be detected.", 0.90, 0.0, 1.0);
     public IntOption minNumInstancesOption = new IntOption("minNumInstances", 'n', "The minimum number of instances before permitting detecting change.", 30, 0, Integer.MAX_VALUE);
     public IntOption minNumErrorsOption = new IntOption("minNumErrors", 'e', "The minimum number of errors before permitting detecting change.", 30, 0, Integer.MAX_VALUE);
-	
+
     private double m_numErrors;
 
     private int m_n;
@@ -37,7 +37,7 @@ public class EarlyDriftDetectionMethod extends EDDM {
         this.m_m2smax = 0.0;
         this.m_lastLevel = DDM_INCONTROL_LEVEL;
     }
-    
+
     @Override
     public int computeNextVal(boolean prediction) {
     	this.m_n++;
