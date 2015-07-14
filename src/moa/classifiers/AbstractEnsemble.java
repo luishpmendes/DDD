@@ -7,7 +7,7 @@ import weka.core.Instance;
 
 public abstract class AbstractEnsemble extends AbstractClassifier implements
 		Ensemble {
-	
+
     public ClassOption baseLearnerOption = new ClassOption("baseLearner", 'l',
             "Classifier to train.", Classifier.class, "trees.HoeffdingTree");
 
