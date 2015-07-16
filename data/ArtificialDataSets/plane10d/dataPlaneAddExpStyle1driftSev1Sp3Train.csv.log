@@ -1,0 +1,14 @@
+Drift data set generated.
+
+Concept 0:
+Number of examples of class 0: 257.
+Number of examples of class 1: 193.
+Number of noisy examples that should belong to class 0: 28.
+Number of noisy examples that should belong to class 1: 22.
+
+Concept 1:
+Number of examples of class 0: 239.
+Number of examples of class 1: 211.
+Number of noisy examples that should belong to class 0: 23.
+Number of noisy examples that should belong to class 1: 27.
+

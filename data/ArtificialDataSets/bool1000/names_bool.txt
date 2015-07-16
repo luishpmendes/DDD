@@ -1,0 +1,5 @@
+0.0, 1.0
+color:r,g,b
+shape:r,t,c
+size:s,m,l
+
