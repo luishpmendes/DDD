@@ -1,3 +1,4 @@
+id_shop,sex,marital,age,dependants,education,phone,area,payday,shoprank,residence,time,mother,father,town,state,months,prof,income,add,card,accounts,mobile,contact,netincome,booth,add2,insurance,class
 22,F,O,44,0,0,N,31,12,0,P,12,Y,Y,N,Y,48,731,0,Y,N,0,N,N,300,0,0,N,0
 15,F,S,18,0,0,Y,31,20,0,P,216,Y,Y,Y,Y,12,853,0,Y,N,0,N,N,300,0,0,N,0
 24,F,C,22,0,0,Y,31,8,0,P,48,Y,N,Y,Y,12,40,0,Y,N,0,N,N,229,0,0,N,0
