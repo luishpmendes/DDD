@@ -6,9 +6,16 @@ import moa.options.IntOption;
 public class EarlyDriftDetectionMethod extends EDDM {
 	private static final long serialVersionUID = 1L;
 
+	/** Value that determines whether the warning level is triggered */
 	public FloatOption warningOption = new FloatOption("warning", 'w', "Value that determines whether the warning level is triggered.", 0.95, 0.0, 1.0);
+
+	/** Value that determines whether a drift is considered to be detected */
 	public FloatOption outControlOption = new FloatOption("outControl", 'd', "Value that determines whether a drift is considered to be detected.", 0.90, 0.0, 1.0);
+
+	/** The minimum number of instances before permitting detecting change */
     public IntOption minNumInstancesOption = new IntOption("minNumInstances", 'n', "The minimum number of instances before permitting detecting change.", 30, 0, Integer.MAX_VALUE);
+
+    /** The minimum number of errors before permitting detecting change */
     public IntOption minNumErrorsOption = new IntOption("minNumErrors", 'e', "The minimum number of errors before permitting detecting change.", 30, 0, Integer.MAX_VALUE);
 
     private double m_numErrors;

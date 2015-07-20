@@ -5,17 +5,31 @@ import moa.options.FloatOption;
 import moa.options.IntOption;
 import weka.core.Instance;
 
+/**
+ * Abstract Classifier.
+ * 
+ * <p>Parameters:</p>
+ * <ul>
+ * <li>-l : Classiﬁer to train</li>
+ * <li>-s : The number of models in the ensemble</li>
+ * <li>-d : Parameter used to encourage more or less diversity</li>
+ * </ul>
+ * @author Luis H. P. Mendes (luishpmendes@gmail.com)
+ */
 public abstract class AbstractEnsemble extends AbstractClassifier implements
 		Ensemble {
 
+	/** Classiﬁer to train */
     public ClassOption baseLearnerOption = new ClassOption("baseLearner", 'l',
             "Classifier to train.", Classifier.class, "trees.HoeffdingTree");
 
+    /** The number of models in the ensemble */
     public IntOption ensembleSizeOption = new IntOption("ensembleSize", 's',
-            "The number of models in the bag.", 10, 1, Integer.MAX_VALUE);
-    
-	public FloatOption lambdaOption = new FloatOption("lambda", 'l',
-			"Parameter used by Poisson to encourage more or less diversity.", 1.0);
+            "The number of models in the ensemble.", 10, 1, Integer.MAX_VALUE);
+
+    /** Parameter used to encourage more or less diversity */
+	public FloatOption lambdaOption = new FloatOption("lambda", 'd',
+			"Parameter used to encourage more or less diversity.", 1.0);
 
     protected Classifier[] ensemble;
 
@@ -31,20 +45,40 @@ public abstract class AbstractEnsemble extends AbstractClassifier implements
      */
     public abstract void trainOnInstanceImpl(Instance inst, double lambda);
 
+    /**
+     * Gets the purpose of this object
+     *
+     * @return the string with the purpose of this object
+     */
     @Override
     public String getPurposeString() {
         return "MOA Ensemble: " + getClass().getCanonicalName();
     }
 
+    /**
+     * Trains this ensemble incrementally using the given instance and lambda.
+     *
+     * @param inst the instance to be used for training
+     * @param lambda parameter used to encourage more or less diversity
+     */
 	public void trainOnInstance(Instance inst, double lambda) {
 		if (inst.weight() > 0.0) {
             this.trainingWeightSeenByModel += inst.weight();
             trainOnInstanceImpl(inst, lambda);
         }
 	}
-
+	
+    /**
+     * Trains this classifier incrementally using the given instance.<br><br>
+     * 
+     * The reason for ...Impl methods: ease programmer burden by not requiring 
+     * them to remember calls to super in overridden methods. 
+     * Note that this will produce compiler errors if not overridden.
+     *
+     * @param inst the instance to be used for training
+     */
     @Override
     public void trainOnInstanceImpl(Instance inst) {
-    	this.trainOnInstance(inst, this.lambdaOption.getValue());
+    	this.trainOnInstanceImpl(inst, this.lambdaOption.getValue());
     }
 }

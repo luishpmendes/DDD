@@ -10,25 +10,39 @@ import moa.classifiers.core.driftdetection.DriftDetectionMethod;
 import moa.options.ClassOption;
 import moa.options.FloatOption;
 
+/**
+ * Diversity for Dealing with Drifts of Leandro L. Minku and Xin Yao. 
+ * 
+ * <p>Parameters:</p>
+ * <ul>
+ * <li>-w : Multiplier constant for the weight of the old low diversity ensemble</li>
+ * <li>-e : Online ensemble learning algorithm</li>
+ * <li>-l : Parameter for ensemble learning with low diversity</li>
+ * <li>-h : Parameter for ensemble learning with low diversity</li>
+ * <li>-d : Drift detection method</li>
+ * </ul>
+ *
+ * @author Luis H. P. Mendes (luishpmendes@gmail.com)
+ */
 public class DDD extends AbstractClassifier {
 	private static final long serialVersionUID = 1L;
 
 	public static final int BEFORE_DRIFT = 0;
 	public static final int AFTER_DRIFT = 1;
 
-	/* multiplier constant W for weight of the old low diversity ensemble */
-	public FloatOption weightOption = new FloatOption("weight", 'w', "multiplier constant for the weight of the old low diversity ensemble", 1.0);
+	/** Multiplier constant for weight of the old low diversity ensemble */
+	public FloatOption weightOption = new FloatOption("weight", 'w', "Multiplier constant for the weight of the old low diversity ensemble", 1.0);
 
-	/* online ensemble learning algorithm EnsembleLearning; */
+	/** Online ensemble learning algorithm */
 	public ClassOption ensembleLearningOption = new ClassOption("baseEnsembleLearner", 'e', "Online ensemble learning algorithm.", Classifier.class, "meta.OnlineBagging");
 
-	/* parameter for ensemble learning with low diversity */
+	/** Parameter for ensemble learning with low diversity */
 	public FloatOption lowDiversityOption = new FloatOption("lowDiversity", 'l', "Parameter for ensemble learning with low diversity.", 2.0);
 
-	/* parameter for ensemble learning with high diversity */
-	public FloatOption highDiversityOption = new FloatOption("lowDiversity", 'l', "Parameter for ensemble learning with low diversity.", 0.005);
+	/** Parameter for ensemble learning with high diversity */
+	public FloatOption highDiversityOption = new FloatOption("lowDiversity", 'h', "Parameter for ensemble learning with high diversity.", 0.005);
 
-	/* drift detection method */
+	/** Drift detection method */
 	public ClassOption driftDetectionMethodOption = new ClassOption("driftDetectionMethodOption", 'd', "Drift detection method.", DriftDetectionMethod.class, "EarlyDriftDetectionMethod");
 
 	/* online ensembles */
@@ -37,7 +51,7 @@ public class DDD extends AbstractClassifier {
 	private Ensemble hol; /* old low diversity */
 	private Ensemble hoh; /* old high diversity */
 
-	/* mode of operations */
+	/* Mode of operation */
 	private int mode;
 
 	/* accuracies */
@@ -159,23 +173,52 @@ public class DDD extends AbstractClassifier {
 		}
 		this.ddmLevel = ((DriftDetectionMethod) this.getPreparedClassOption(this.driftDetectionMethodOption)).computeNextVal(prediction);
 	}
-	
+
+    /**
+     * Gets the current measurements of this classifier.<br><br>
+     * 
+     * The reason for ...Impl methods: ease programmer burden by not requiring 
+     * them to remember calls to super in overridden methods. 
+     * Note that this will produce compiler errors if not overridden.
+     *
+     * @return an array of measurements to be used in evaluation tasks
+     */
 	@Override
 	protected Measurement[] getModelMeasurementsImpl() {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
+
+    /**
+     * Returns a string representation of the model.
+     *
+     * @param out	the stringbuilder to add the description
+     * @param indent	the number of characters to indent
+     */
 	@Override
 	public void getModelDescription(StringBuilder out, int indent) {
 		// TODO Auto-generated method stub
 	}
-	
+
+    /**
+     * Gets the purpose of this object
+     *
+     * @return the string with the purpose of this object
+     */
     @Override
     public String getPurposeString() {
         return "Diversity for Dealing with Drifts of Leandro L. Minku and Xin Yao.";
     }
 
+    /**
+     * Predicts the class memberships for a given instance. If
+     * an instance is unclassified, the returned array elements
+     * must be all zero.
+     *
+     * @param inst the instance to be classified
+     * @return an array containing the estimated membership
+     * probabilities of the test instance in each class
+     */
 	public double[] getVotesForInstance(Instance inst) {
 		double[] result = null;
 		if (this.mode == DDD.BEFORE_DRIFT) {
@@ -190,10 +233,24 @@ public class DDD extends AbstractClassifier {
 		return result;
 	}
 
+    /**
+     * Gets whether this classifier needs a random seed.
+     * Examples of methods that needs a random seed are bagging and boosting.
+     *
+     * @return true if the classifier needs a random seed.
+     */
 	public boolean isRandomizable() {
 		return true;
 	}
 
+    /**
+     * Resets this classifier. It must be similar to
+     * starting a new classifier from scratch. <br><br>
+     * 
+     * The reason for ...Impl methods: ease programmer burden by not requiring 
+     * them to remember calls to super in overridden methods. 
+     * Note that this will produce compiler errors if not overridden.
+     */
 	@Override
 	public void resetLearningImpl() {
 		this.mode = DDD.BEFORE_DRIFT;
@@ -212,6 +269,15 @@ public class DDD extends AbstractClassifier {
 		this.timeStep = 0;
 	}
 
+    /**
+     * Trains this classifier incrementally using the given instance.<br><br>
+     * 
+     * The reason for ...Impl methods: ease programmer burden by not requiring 
+     * them to remember calls to super in overridden methods. 
+     * Note that this will produce compiler errors if not overridden.
+     *
+     * @param inst the instance to be used for training
+     */
 	@Override
 	public void trainOnInstanceImpl(Instance inst) {
 		if (this.mode == DDD.AFTER_DRIFT) {
