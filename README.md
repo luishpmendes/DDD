@@ -8,4 +8,4 @@ java -cp moa.jar -javaagent:sizeofag.jar moa.DoTask "EvaluatePrequential -s (Arf
 
 Converting CSV to ARFF:
 
-java -cp target/DDD-0.0.1-SNAPSHOT.jar weka.core.converters.CSVLoader data/ArtificialDataSets/bool1000/dataBool1000Sev1Sp1Test.csv > data/ArtificialDataSets/bool1000/dataBool1000Sev1Sp1Test.arff
+java -cp target/DDD-0.0.1-SNAPSHOT.jar weka.core.converters.CSVLoader -B 1000 data/ArtificialDataSets/bool1000/dataBool1000Sev1Sp1Test.csv > data/ArtificialDataSets/bool1000/dataBool1000Sev1Sp1Test.arff
