@@ -127,7 +127,7 @@ public class DDD extends AbstractClassifier {
 		if (this.timeStep == 0) {
 			this.varnl = 0.0;
 		} else {
-			this.varnl = this.varnl + (((accnlex - tempnl) * (accnlex - this.accnl)) / this.timeStep);
+			this.varnl = this.varnl + (((accnlex - tempnl) * (accnlex - this.accnl)) / (this.timeStep - 1));
 		}
 		this.stdnl = Math.sqrt(this.varnl);
 		// Update(accol, stdol, hol, d)
@@ -144,7 +144,7 @@ public class DDD extends AbstractClassifier {
 		if (this.timeStep == 0) {
 			this.varol = 0.0;
 		} else {
-			this.varol = this.varol + (((accolex - tempol) * (accolex - this.accol)) / this.timeStep);
+			this.varol = this.varol + (((accolex - tempol) * (accolex - this.accol)) / (this.timeStep - 1));
 		}
 		this.stdol = Math.sqrt(this.varol);
 		// Update(accoh, stdoh, hoh, d)
@@ -161,7 +161,7 @@ public class DDD extends AbstractClassifier {
 		if (this.timeStep == 0) {
 			this.varoh = 0.0;
 		} else {
-			this.varoh = this.varoh + (((accohex - tempoh) * (accohex - this.accoh)) / this.timeStep);
+			this.varoh = this.varoh + (((accohex - tempoh) * (accohex - this.accoh)) / (this.timeStep - 1));
 		}
 	}
 	
@@ -281,7 +281,7 @@ public class DDD extends AbstractClassifier {
 	@Override
 	public void trainOnInstanceImpl(Instance inst) {
 		if (this.mode == DDD.AFTER_DRIFT) {
-			this.update(inst); /* ??? */
+			this.update(inst);
 		}
 		/* drift ← DetectDrift(hnl, d, pd) */
 		this.detectDrift(inst);
