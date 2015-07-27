@@ -2,5 +2,6 @@ moa/classifiers/Ensemble.class
 moa/classifiers/meta/OnlineBagging.class
 moa/classifiers/AbstractEnsemble.class
 moa/classifiers/meta/DDD.class
+moa/evaluation/SimpleClassificationPerformanceEvaluator.class
 moa/classifiers/core/driftdetection/EarlyDriftDetectionMethod.class
 moa/DoTask.class
