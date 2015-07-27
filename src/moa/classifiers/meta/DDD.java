@@ -40,7 +40,7 @@ public class DDD extends AbstractClassifier {
 	public FloatOption lowDiversityOption = new FloatOption("lowDiversity", 'l', "Parameter for ensemble learning with low diversity.", 2.0);
 
 	/** Parameter for ensemble learning with high diversity */
-	public FloatOption highDiversityOption = new FloatOption("lowDiversity", 'h', "Parameter for ensemble learning with high diversity.", 0.005);
+	public FloatOption highDiversityOption = new FloatOption("highDiversity", 'h', "Parameter for ensemble learning with high diversity.", 0.005);
 
 	/** Drift detection method */
 	public ClassOption driftDetectionMethodOption = new ClassOption("driftDetectionMethodOption", 'd', "Drift detection method.", DriftDetectionMethod.class, "EarlyDriftDetectionMethod");
@@ -174,7 +174,83 @@ public class DDD extends AbstractClassifier {
 		this.ddmLevel = ((DriftDetectionMethod) this.getPreparedClassOption(this.driftDetectionMethodOption)).computeNextVal(prediction);
 	}
 
-    /**
+	public Ensemble getHnl() {
+		return (Ensemble) this.hnl.copy();
+	}
+
+	public Ensemble getHnh() {
+		return (Ensemble) this.hnh.copy();
+	}
+
+	public Ensemble getHol() {
+		return (Ensemble) this.hol.copy();
+	}
+
+	public Ensemble getHoh() {
+		return (Ensemble) this.hoh.copy();
+	}
+
+	public int getMode() {
+		return this.mode;
+	}
+
+	public double getAccol() {
+		return this.accol;
+	}
+
+	public double getAccoh() {
+		return this.accoh;
+	}
+
+	public double getAccnl() {
+		return this.accnl;
+	}
+
+	public double getAccnh() {
+		return this.accnh;
+	}
+
+	public double getVarol() {
+		return this.varol;
+	}
+
+	public double getVaroh() {
+		return this.varoh;
+	}
+
+	public double getVarnl() {
+		return this.varnl;
+	}
+
+	public double getVarnh() {
+		return this.varnh;
+	}
+
+	public double getStdol() {
+		return this.stdol;
+	}
+
+	public double getStdoh() {
+		return this.stdoh;
+	}
+
+	public double getStdnl() {
+		return this.stdnl;
+	}
+
+	public double getStdnh() {
+		return this.stdnh;
+	}
+
+	public int getDdmLevel() {
+		return this.ddmLevel;
+	}
+
+	public int getTimeStep() {
+		return this.timeStep;
+	}
+
+	/**
      * Gets the current measurements of this classifier.<br><br>
      * 
      * The reason for ...Impl methods: ease programmer burden by not requiring 
@@ -185,8 +261,23 @@ public class DDD extends AbstractClassifier {
      */
 	@Override
 	protected Measurement[] getModelMeasurementsImpl() {
-		// TODO Auto-generated method stub
-		return null;
+        return new Measurement[]{
+                new Measurement("mode", this.mode),
+                new Measurement("accol", this.accol),
+                new Measurement("accoh", this.accoh),
+                new Measurement("accnl", this.accnl),
+                new Measurement("accnh", this.accnh),
+                new Measurement("varol", this.varol),
+                new Measurement("varoh", this.varoh),
+                new Measurement("varnl", this.varnl),
+                new Measurement("varnh", this.varnh),
+                new Measurement("stdol", this.stdol),
+                new Measurement("stdoh", this.stdoh),
+                new Measurement("stdnl", this.stdnl),
+                new Measurement("stdnh", this.stdnh),
+                new Measurement("ddmLevel", this.ddmLevel),
+                new Measurement("timeStep", this.timeStep)
+            };
 	}
 
     /**
