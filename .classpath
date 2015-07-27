@@ -11,6 +11,11 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="var" path="M2_REPO/nz/ac/waikato/cms/moa/moa/2013.11/moa-2013.11.jar" sourcepath="M2_REPO/nz/ac/waikato/cms/moa/moa/2013.11/moa-2013.11-sources.jar"/>
+	<classpathentry kind="var" path="M2_REPO/nz/ac/waikato/cms/weka/weka-dev/3.7.12/weka-dev-3.7.12.jar" sourcepath="M2_REPO/nz/ac/waikato/cms/weka/weka-dev/3.7.12/weka-dev-3.7.12-sources.jar"/>
+	<classpathentry kind="var" path="M2_REPO/net/sf/squirrel-sql/thirdparty-non-maven/java-cup/0.11a/java-cup-0.11a.jar"/>
+	<classpathentry kind="var" path="M2_REPO/org/pentaho/pentaho-commons/pentaho-package-manager/1.0.8/pentaho-package-manager-1.0.8.jar"/>
+	<classpathentry kind="var" path="M2_REPO/com/googlecode/sizeofag/sizeofag/1.0.0/sizeofag-1.0.0.jar"/>
 	<classpathentry kind="con" path="org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER">
 		<attributes>
 			<attribute name="maven.pomderived" value="true"/>
