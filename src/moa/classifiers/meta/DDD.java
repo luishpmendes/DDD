@@ -288,7 +288,8 @@ public class DDD extends AbstractClassifier {
      */
 	@Override
 	public void getModelDescription(StringBuilder out, int indent) {
-		// TODO Auto-generated method stub
+		Measurement.getMeasurementsDescription(getModelMeasurements(),
+				out, indent);
 	}
 
     /**
