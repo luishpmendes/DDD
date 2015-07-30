@@ -11,7 +11,7 @@
 @attribute 9 numeric
 @attribute 10 numeric
 @attribute 11 numeric
-@attribute class numeric
+@attribute class {0,1}
 
 @data
 

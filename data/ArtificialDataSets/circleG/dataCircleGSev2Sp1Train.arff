@@ -2,7 +2,7 @@
 
 @attribute x numeric
 @attribute y numeric
-@attribute class numeric
+@attribute class {0,1}
 
 @data
 

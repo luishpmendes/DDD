@@ -28,7 +28,7 @@
 @attribute booth numeric
 @attribute add2 numeric
 @attribute insurance {N}
-@attribute class numeric
+@attribute class {0,1}
 
 @data
 

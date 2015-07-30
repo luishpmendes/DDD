@@ -3,7 +3,7 @@
 @attribute color {r,b,g}
 @attribute shape {c,r,t}
 @attribute size {l,m,s}
-@attribute class numeric
+@attribute class {0,1}
 
 @data
 
