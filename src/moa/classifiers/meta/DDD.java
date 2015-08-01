@@ -288,8 +288,7 @@ public class DDD extends AbstractClassifier {
      */
 	@Override
 	public void getModelDescription(StringBuilder out, int indent) {
-		Measurement.getMeasurementsDescription(getModelMeasurements(),
-				out, indent);
+		Measurement.getMeasurementsDescription(getModelMeasurements(), out, indent);
 	}
 
     /**
@@ -326,16 +325,6 @@ public class DDD extends AbstractClassifier {
 	}
 
     /**
-     * Gets whether this classifier needs a random seed.
-     * Examples of methods that needs a random seed are bagging and boosting.
-     *
-     * @return true if the classifier needs a random seed.
-     */
-	public boolean isRandomizable() {
-		return true;
-	}
-
-    /**
      * Resets this classifier. It must be similar to
      * starting a new classifier from scratch. <br><br>
      * 
@@ -348,7 +337,9 @@ public class DDD extends AbstractClassifier {
 		this.mode = DDD.BEFORE_DRIFT;
 
 		this.hnl = (Ensemble) this.getPreparedClassOption(this.ensembleLearningOption); /* new low diversity */
+		this.hnl.setRandomizable(this.isRandomizable());
 		this.hnh = (Ensemble) this.getPreparedClassOption(this.ensembleLearningOption); /* new high diversity */
+		this.hnh.setRandomizable(this.isRandomizable());
 		this.hol = null; /* old low diversity */
 		this.hoh = null; /* old high diversity */
 
@@ -386,7 +377,9 @@ public class DDD extends AbstractClassifier {
 			}
 			this.hoh = this.hnh;
 			this.hnl = (Ensemble) this.getPreparedClassOption(this.ensembleLearningOption);
+			this.hnl.setRandomizable(this.isRandomizable());
 			this.hnh = (Ensemble) this.getPreparedClassOption(this.ensembleLearningOption);
+			this.hnh.setRandomizable(this.isRandomizable());
 			this.accol = this.accoh = this.accnl = this.accnh = 0;
 			this.stdol = this.stdoh = this.stdnl = this.stdnh = 0;
 			this.mode = DDD.AFTER_DRIFT;
