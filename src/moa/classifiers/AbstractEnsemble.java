@@ -24,7 +24,7 @@ public abstract class AbstractEnsemble extends AbstractClassifier implements
             "Classifier to train.", Classifier.class, "trees.HoeffdingTree");
 
     /** The number of models in the ensemble */
-    public IntOption ensembleSizeOption = new IntOption("ensembleSize", 's',
+    public IntOption ensembleSizeOption = new IntOption("ensembleSize", 'n',
             "The number of models in the ensemble.", 10, 1, Integer.MAX_VALUE);
 
     /** Parameter used to encourage more or less diversity */

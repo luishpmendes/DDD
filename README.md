@@ -20,7 +20,7 @@ driftDetectionMethodOption warningOption = 0.75 (gamma)
 driftDetectionMethodOption outControlOption = 0.75 (gamma)
 reset = 16666.67
 
-java -cp target/DDD-0.0.1-SNAPSHOT.jar moa.DoTask "EvaluatePrequential -l (meta.DDD -w 1 -l 1 -h 0.005 -e (meta.OnlineBagging -l bayes.NaiveBayes -d 0.005)) -d (EarlyDriftDetectionMethod -w 0.75 -d 0.75) -s (ArffFileStream -f data/PAKDD/Modeling_Data.arff) -e (SimpleClassificationPerformanceEvaluator -r 16666.67) -f 30 -i -1 -d data/PAKDD/Modeling_DataNB/Modeling_DataNB.dump -o data/PAKDD/Modeling_DataNB/Modeling_DataNB.out"
+java -cp target/DDD-0.0.1-SNAPSHOT.jar moa.DoTask "EvaluatePrequential -l (meta.DDD -r -w 1 -l 1 -h 0.005 -e (meta.OnlineBagging -l bayes.NaiveBayes -d 0.005)) -d (EarlyDriftDetectionMethod -w 0.75 -d 0.75) -s (ArffFileStream -f data/PAKDD/Modeling_Data.arff) -e (SimpleClassificationPerformanceEvaluator -r 16666.67) -f 30 -i -1 -d data/PAKDD/Modeling_DataNB/Modeling_DataNB.dump -o data/PAKDD/Modeling_DataNB/Modeling_DataNB.out"
 
 weight = 1
 lowDiversity = 1
@@ -30,7 +30,7 @@ driftDetectionMethodOption warningOption = 0.75 (gamma)
 driftDetectionMethodOption outControlOption = 0.75 (gamma)
 reset = 16666.67
 
-java -cp target/DDD-0.0.1-SNAPSHOT.jar moa.DoTask "EvaluatePrequential -l (meta.DDD -w 1 -l 1 -h 0.005 -e (meta.OnlineBagging -l (meta.WEKAClassifier -l weka.classifiers.functions.MultilayerPerceptron) -d 0.005)) -d (EarlyDriftDetectionMethod -w 0.75 -d 0.75) -s (ArffFileStream -f data/PAKDD/Modeling_Data.arff) -e (SimpleClassificationPerformanceEvaluator -r 16666.67) -f 30 -i -1 -d data/PAKDD/Modeling_DataMLP/Modeling_DataMLP.dump -o data/PAKDD/Modeling_DataMLP/Modeling_DataMLP.out"
+java -cp target/DDD-0.0.1-SNAPSHOT.jar moa.DoTask "EvaluatePrequential -l (meta.DDD -r -w 1 -l 1 -h 0.005 -e (meta.OnlineBagging -l (meta.WEKAClassifier -l weka.classifiers.functions.MultilayerPerceptron) -d 0.005)) -d (EarlyDriftDetectionMethod -w 0.75 -d 0.75) -s (ArffFileStream -f data/PAKDD/Modeling_Data.arff) -e (SimpleClassificationPerformanceEvaluator -r 16666.67) -f 30 -i -1 -d data/PAKDD/Modeling_DataMLP/Modeling_DataMLP.dump -o data/PAKDD/Modeling_DataMLP/Modeling_DataMLP.out"
 
 
 Running KDD:
@@ -43,7 +43,7 @@ driftDetectionMethodOption warningOption = 1.15 (gamma)
 driftDetectionMethodOption outControlOption = 1.15 (gamma)
 reset = 164673.67
 
-java -cp target/DDD-0.0.1-SNAPSHOT.jar moa.DoTask "EvaluatePrequential -l (meta.DDD -w 1 -l 1 -h 0.005 -e (meta.OnlineBagging -l bayes.NaiveBayes -d 0.005)) -d (EarlyDriftDetectionMethod -w 1.15 -d 1.15) -s (ArffFileStream -f data/kdd/kddcup.data_10_percent_processed.arff) -e (SimpleClassificationPerformanceEvaluator -r 164673.67) -f 30 -i -1 -d data/kdd/kddcup.data_10_percent_processedNB/kddcup.data_10_percent_processedNB.dump -o data/kdd/kddcup.data_10_percent_processedNB/kddcup.data_10_percent_processedNB.out"
+java -cp target/DDD-0.0.1-SNAPSHOT.jar moa.DoTask "EvaluatePrequential -l (meta.DDD -r -w 1 -l 1 -h 0.005 -e (meta.OnlineBagging -l bayes.NaiveBayes -d 0.005)) -d (EarlyDriftDetectionMethod -w 1.15 -d 1.15) -s (ArffFileStream -f data/kdd/kddcup.data_10_percent_processed.arff) -e (SimpleClassificationPerformanceEvaluator -r 164673.67) -f 30 -i -1 -d data/kdd/kddcup.data_10_percent_processedNB/kddcup.data_10_percent_processedNB.dump -o data/kdd/kddcup.data_10_percent_processedNB/kddcup.data_10_percent_processedNB.out"
 
 weight = 1
 lowDiversity = 1
@@ -53,7 +53,7 @@ driftDetectionMethodOption warningOption = 0.95 (gamma)
 driftDetectionMethodOption outControlOption = 0.95 (gamma)
 reset = 164674
 
-java -cp target/DDD-0.0.1-SNAPSHOT.jar moa.DoTask "EvaluatePrequential -l (meta.DDD -w 1 -l 1 -h 0.005 -e (meta.OnlineBagging -l (meta.WEKAClassifier -l weka.classifiers.functions.MultilayerPerceptron) -d 0.005)) -d (EarlyDriftDetectionMethod -w 0.95 -d 0.95) -s (ArffFileStream -f data/kdd/kddcup.data_10_percent_processed.arff) -e (SimpleClassificationPerformanceEvaluator -r 164673.67) -f 30 -i -1 -d data/kdd/kddcup.data_10_percent_processedMLP/kddcup.data_10_percent_processedMLP.dump -o data/kdd/kddcup.data_10_percent_processedMLP/kddcup.data_10_percent_processedMLP.out"
+java -cp target/DDD-0.0.1-SNAPSHOT.jar moa.DoTask "EvaluatePrequential -l (meta.DDD -r -w 1 -l 1 -h 0.005 -e (meta.OnlineBagging -l (meta.WEKAClassifier -l weka.classifiers.functions.MultilayerPerceptron) -d 0.005)) -d (EarlyDriftDetectionMethod -w 0.95 -d 0.95) -s (ArffFileStream -f data/kdd/kddcup.data_10_percent_processed.arff) -e (SimpleClassificationPerformanceEvaluator -r 164673.67) -f 30 -i -1 -d data/kdd/kddcup.data_10_percent_processedMLP/kddcup.data_10_percent_processedMLP.dump -o data/kdd/kddcup.data_10_percent_processedMLP/kddcup.data_10_percent_processedMLP.out"
 
 
 run again with the BasicClassificationPerformanceEvaluator, I fixed the dataset
