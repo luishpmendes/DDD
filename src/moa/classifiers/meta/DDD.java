@@ -1,5 +1,7 @@
 package moa.classifiers.meta;
 
+import java.util.Random;
+
 import weka.core.Instance;
 import weka.core.Utils;
 import moa.classifiers.Classifier;
@@ -173,7 +175,7 @@ public class DDD extends AbstractClassifier {
 		}
 		this.ddmLevel = ((DriftDetectionMethod) this.getPreparedClassOption(this.driftDetectionMethodOption)).computeNextVal(prediction);
 	}
-
+	
 	public Ensemble getHnl() {
 		return (Ensemble) this.hnl.copy();
 	}
@@ -337,9 +339,9 @@ public class DDD extends AbstractClassifier {
 		this.mode = DDD.BEFORE_DRIFT;
 
 		this.hnl = (Ensemble) this.getPreparedClassOption(this.ensembleLearningOption); /* new low diversity */
-		this.hnl.setRandomizable(this.isRandomizable());
+		this.hnl.setClassifierRandom(this.classifierRandom);
 		this.hnh = (Ensemble) this.getPreparedClassOption(this.ensembleLearningOption); /* new high diversity */
-		this.hnh.setRandomizable(this.isRandomizable());
+		this.hnh.setClassifierRandom(this.classifierRandom);
 		this.hol = null; /* old low diversity */
 		this.hoh = null; /* old high diversity */
 
@@ -377,9 +379,9 @@ public class DDD extends AbstractClassifier {
 			}
 			this.hoh = this.hnh;
 			this.hnl = (Ensemble) this.getPreparedClassOption(this.ensembleLearningOption);
-			this.hnl.setRandomizable(this.isRandomizable());
+			this.hnl.setClassifierRandom(this.classifierRandom);
 			this.hnh = (Ensemble) this.getPreparedClassOption(this.ensembleLearningOption);
-			this.hnh.setRandomizable(this.isRandomizable());
+			this.hnh.setClassifierRandom(this.classifierRandom);
 			this.accol = this.accoh = this.accnl = this.accnh = 0;
 			this.stdol = this.stdoh = this.stdnl = this.stdnh = 0;
 			this.mode = DDD.AFTER_DRIFT;
@@ -404,4 +406,31 @@ public class DDD extends AbstractClassifier {
 
 		this.timeStep++;
 	}
+
+	public boolean isRandomizable() {
+		return true;
+	}
+	
+    @Override
+    public void resetLearning() {
+        this.trainingWeightSeenByModel = 0.0;
+        if (isRandomizable()) {
+			if (this.randomSeedOption != null && this.randomSeedOption.getValue() != 1 && this.randomSeed != 1) {
+				this.classifierRandom = new Random();
+			} else {
+				this.classifierRandom = new Random(this.randomSeed);
+			}
+        }
+        resetLearningImpl();
+    }
+    
+    @Override
+    public void setRandomSeed(int s) {
+    	super.setRandomSeed(s);
+        this.classifierRandom.setSeed(s);
+    }
+    
+    public void setClassifierRandom(Random r) {
+    	this.classifierRandom = r;
+    }
 }

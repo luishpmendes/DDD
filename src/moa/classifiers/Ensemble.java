@@ -1,5 +1,7 @@
 package moa.classifiers;
 
+import java.util.Random;
+
 import weka.core.Instance;
 
 /**
@@ -15,4 +17,6 @@ public interface Ensemble extends Classifier {
      * @param lambda parameter used to encourage more or less diversity
      */
     public void trainOnInstance(Instance inst, double lambda);
+    
+    public void setClassifierRandom(Random r);
 }

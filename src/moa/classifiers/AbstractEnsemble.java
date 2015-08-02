@@ -1,5 +1,7 @@
 package moa.classifiers;
 
+import java.util.Random;
+
 import moa.options.ClassOption;
 import moa.options.FloatOption;
 import moa.options.IntOption;
@@ -80,5 +82,28 @@ public abstract class AbstractEnsemble extends AbstractClassifier implements
     @Override
     public void trainOnInstanceImpl(Instance inst) {
     	this.trainOnInstanceImpl(inst, this.lambdaOption.getValue());
+    }
+    
+    @Override
+    public void setRandomSeed(int s) {
+    	super.setRandomSeed(s);
+        this.classifierRandom.setSeed(s);
+    }
+    
+    @Override
+    public void resetLearning() {
+        this.trainingWeightSeenByModel = 0.0;
+        if (isRandomizable()) {
+			if (this.randomSeedOption != null && this.randomSeedOption.getValue() != 1 && this.randomSeed != 1) {
+				this.classifierRandom = new Random();
+			} else {
+				this.classifierRandom = new Random(this.randomSeed);
+			}
+        }
+        resetLearningImpl();
+    }
+
+    public void setClassifierRandom(Random r) {
+    	this.classifierRandom = r;
     }
 }
