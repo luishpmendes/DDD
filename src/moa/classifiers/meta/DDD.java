@@ -11,6 +11,7 @@ import moa.core.Measurement;
 import moa.classifiers.core.driftdetection.DriftDetectionMethod;
 import moa.options.ClassOption;
 import moa.options.FloatOption;
+import moa.options.IntOption;
 
 /**
  * Diversity for Dealing with Drifts of Leandro L. Minku and Xin Yao. 
@@ -415,11 +416,15 @@ public class DDD extends AbstractClassifier {
     public void resetLearning() {
         this.trainingWeightSeenByModel = 0.0;
         if (isRandomizable()) {
-			if (this.randomSeedOption != null && this.randomSeedOption.getValue() != 1 && this.randomSeed != 1) {
-				this.classifierRandom = new Random();
-			} else {
-				this.classifierRandom = new Random(this.randomSeed);
+        	if (this.randomSeedOption == null) {
+        		this.randomSeedOption = new IntOption("randomSeed", 'r', "Seed for random behaviour of the classifier.", this.randomSeed);
+        	}
+        	this.randomSeedOption.setValue(this.randomSeed);
+			if (this.randomSeedOption.getValue() == 1 && this.randomSeed == 1) {
+				this.randomSeed = (int) System.currentTimeMillis();
+				this.randomSeedOption.setValue(this.randomSeed);
 			}
+			this.classifierRandom = new Random(this.randomSeed);
         }
         resetLearningImpl();
     }
