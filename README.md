@@ -56,6 +56,25 @@ reset = 164674
 java -cp target/DDD-0.0.1-SNAPSHOT.jar moa.DoTask "EvaluatePrequential -l (meta.DDD -w 1 -l 1 -h 0.005 -e (meta.OnlineBagging -l (meta.WEKAClassifier -l weka.classifiers.functions.MultilayerPerceptron) -d 0.005)) -d (EarlyDriftDetectionMethod -w 0.95 -d 0.95) -s (ArffFileStream -f data/kdd/kddcup.data_10_percent_processed.arff) -e (SimpleClassificationPerformanceEvaluator -r 164673.67) -f 30 -i -1 -d data/kdd/kddcup.data_10_percent_processedMLP/kddcup.data_10_percent_processedMLP.dump -o data/kdd/kddcup.data_10_percent_processedMLP/kddcup.data_10_percent_processedMLP.out"
 
 
+Running circle
+
+weight = 1
+lowDiversity = 1
+highDiversity = 0.05
+baseEnsembleLearner baseLearnerOption =  trees.HoeffdingTree
+driftDetectionMethodOption warningOption = 0.95 (gamma)
+driftDetectionMethodOption outControlOption = 0.95 (gamma)
+reset = half
+
+java -cp target/DDD-0.0.1-SNAPSHOT.jar moa.DoTask "EvaluatePrequential -l (meta.DDD -w 1 -l 1 -h 0.005 -e (meta.OnlineBagging -d 0.005)) -d (EarlyDriftDetectionMethod -w 0.95 -d 0.95) -s (ArffFileStream -f data/ArtificialDataSets/circleG/dataCircleGSev1Sp1Test.arff) -e (SimpleClassificationPerformanceEvaluator -r 250) -f 10 -i -1 -d data/ArtificialDataSets/circleG/dataCircleGSev1Sp1Test/dataCircleGSev1Sp1Test.dump -o data/ArtificialDataSets/circleG/dataCircleGSev1Sp1Test/dataCircleGSev1Sp1Test.out"
+
+java -cp target/DDD-0.0.1-SNAPSHOT.jar moa.DoTask "EvaluatePrequential -l (meta.DDD -w 1 -l 1 -h 0.005 -e (meta.OnlineBagging -d 0.005)) -d (EarlyDriftDetectionMethod -w 0.95 -d 0.95) -s (ArffFileStream -f data/ArtificialDataSets/circleG/dataCircleGSev1Sp1Train.arff) -e (SimpleClassificationPerformanceEvaluator -r 1000) -f 10 -i -1 -d data/ArtificialDataSets/circleG/dataCircleGSev1Sp1Train/dataCircleGSev1Sp1Train.dump -o data/ArtificialDataSets/circleG/dataCircleGSev1Sp1Train/dataCircleGSev1Sp1Train.out"
+
+java -cp target/DDD-0.0.1-SNAPSHOT.jar moa.DoTask "EvaluatePrequential -l (meta.DDD -w 1 -l 1 -h 0.005 -e (meta.OnlineBagging -d 0.005)) -d (EarlyDriftDetectionMethod -w 0.95 -d 0.95) -s (ArffFileStream -f data/ArtificialDataSets/circleG/dataCircleGSev1Sp2Train.arff) -e (SimpleClassificationPerformanceEvaluator -r 1000) -f 10 -i -1 -d data/ArtificialDataSets/circleG/dataCircleGSev1Sp2Train/dataCircleGSev1Sp2Train.dump -o data/ArtificialDataSets/circleG/dataCircleGSev1Sp2Train/dataCircleGSev1Sp2Train.out"
+
+java -cp target/DDD-0.0.1-SNAPSHOT.jar moa.DoTask "EvaluatePrequential -l (meta.DDD -w 1 -l 1 -h 0.005 -e (meta.OnlineBagging -d 0.005)) -d (EarlyDriftDetectionMethod -w 0.95 -d 0.95) -s (ArffFileStream -f data/ArtificialDataSets/circleG/dataCircleGSev1Sp3Train.arff) -e (SimpleClassificationPerformanceEvaluator -r 1000) -f 10 -i -1 -d data/ArtificialDataSets/circleG/dataCircleGSev1Sp3Train/dataCircleGSev1Sp3Train.dump -o data/ArtificialDataSets/circleG/dataCircleGSev1Sp3Train/dataCircleGSev1Sp3Train.out"
+
+
 run again with the BasicClassificationPerformanceEvaluator, I fixed the dataset
 
 run 30 runs
