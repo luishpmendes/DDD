@@ -74,6 +74,8 @@ java -cp target/DDD-0.0.1-SNAPSHOT.jar moa.DoTask "EvaluatePrequential -l (meta.
 
 java -cp target/DDD-0.0.1-SNAPSHOT.jar moa.DoTask "EvaluatePrequential -l (meta.DDD -w 1 -l 1 -h 0.005 -e (meta.OnlineBagging -d 0.005)) -d (EarlyDriftDetectionMethod -w 0.95 -d 0.95) -s (ArffFileStream -f data/ArtificialDataSets/circleG/dataCircleGSev1Sp3Train.arff) -e (SimpleClassificationPerformanceEvaluator -r 1000) -f 10 -i -1 -d data/ArtificialDataSets/circleG/dataCircleGSev1Sp3Train/dataCircleGSev1Sp3Train.dump -o data/ArtificialDataSets/circleG/dataCircleGSev1Sp3Train/dataCircleGSev1Sp3Train.out"
 
+java -cp target/DDD-0.0.1-SNAPSHOT.jar moa.DoTask "EvaluatePrequential -l (meta.DDD -w 1 -l 1 -h 0.005 -e (meta.OnlineBagging -d 0.005)) -d (EarlyDriftDetectionMethod -w 0.95 -d 0.95) -s (ArffFileStream -f data/ArtificialDataSets/circleG/dataCircleGSev2Sp1Test.arff) -e (SimpleClassificationPerformanceEvaluator -r 250) -f 10 -i -1 -d data/ArtificialDataSets/circleG/dataCircleGSev2Sp1Test/dataCircleGSev2Sp1Test.dump -o data/ArtificialDataSets/circleG/dataCircleGSev2Sp1Test/dataCircleGSev2Sp1Test.out"
+
 
 run again with the BasicClassificationPerformanceEvaluator, I fixed the dataset
 
