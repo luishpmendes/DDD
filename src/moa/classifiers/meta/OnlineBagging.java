@@ -110,7 +110,6 @@ public class OnlineBagging extends AbstractEnsemble {
 	public void trainOnInstanceImpl(Instance inst, double lambda) {
 		for (int i = 0; i < this.ensemble.length; i++) {
             int k = MiscUtils.poisson(lambda, this.classifierRandom);
-            System.out.println("k = " + k);
             if (k > 0) {
                 Instance weightedInst = (Instance) inst.copy();
                 weightedInst.setWeight(inst.weight() * k);
