@@ -12,7 +12,7 @@ import weka.core.Instance;
  * 
  * <p>Parameters:</p>
  * <ul>
- * <li>-l : Classiﬁer to train</li>
+ * <li>-l : Classifier to train</li>
  * <li>-s : The number of models in the ensemble</li>
  * <li>-d : Parameter used to encourage more or less diversity</li>
  * </ul>

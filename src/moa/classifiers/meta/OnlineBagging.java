@@ -11,7 +11,7 @@ import weka.core.Instance;
  * Incremental on-line bagging of Oza and Russell.
  *
  * <p>Parameters:</p> <ul>
- * <li>-l : Classiﬁer to train</li>
+ * <li>-l : Classifier to train</li>
  * <li>-s : The number of models in the bag</li> </ul>
  * <li>-d : Parameter used to encourage more or less diversity</li>
  *
@@ -110,6 +110,7 @@ public class OnlineBagging extends AbstractEnsemble {
 	public void trainOnInstanceImpl(Instance inst, double lambda) {
 		for (int i = 0; i < this.ensemble.length; i++) {
             int k = MiscUtils.poisson(lambda, this.classifierRandom);
+            System.out.println("k = " + k);
             if (k > 0) {
                 Instance weightedInst = (Instance) inst.copy();
                 weightedInst.setWeight(inst.weight() * k);
