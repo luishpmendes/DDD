@@ -20,7 +20,7 @@ driftDetectionMethodOption warningOption = 0.75 (gamma)
 driftDetectionMethodOption outControlOption = 0.75 (gamma)
 reset = 16666.67
 
-java -cp target/DDD-0.0.1-SNAPSHOT.jar moa.DoTask "EvaluatePrequential -l (meta.DDD -w 1 -l 1 -h 0.005 -e (meta.OnlineBagging -l bayes.NaiveBayes -d 0.005) -d (EarlyDriftDetectionMethod -w 0.75 -d 0.75)) -s (ArffFileStream -f data/PAKDD/Modeling_Data.arff) -e (SimpleClassificationPerformanceEvaluator -r 16666.67) -f 30 -i -1 -d data/PAKDD/Modeling_DataNB/Modeling_DataNB.dump -o data/PAKDD/Modeling_DataNB/Modeling_DataNB.out"
+java -cp target/DDD-0.0.1-SNAPSHOT.jar moa.DoTask "EvaluatePrequential -l (meta.DDD -w 1 -l 1 -h 0.005 -e (meta.OnlineBagging -l bayes.NaiveBayes -d 0.005) -d (EarlyDriftDetectionMethod -w 0.75 -d 0.75)) -s (ArffFileStream -f data/PAKDD/Modeling_Data.arff) -e (SimpleClassificationPerformanceEvaluator -r 16666.67) -f 225 -i -1 -d data/PAKDD/Modeling_DataNB/Modeling_DataNB.dump -o data/PAKDD/Modeling_DataNB/Modeling_DataNB.out"
 
 weight = 1
 lowDiversity = 1
@@ -30,7 +30,7 @@ driftDetectionMethodOption warningOption = 0.75 (gamma)
 driftDetectionMethodOption outControlOption = 0.75 (gamma)
 reset = 16666.67
 
-java -cp target/DDD-0.0.1-SNAPSHOT.jar moa.DoTask "EvaluatePrequential -l (meta.DDD -w 1 -l 1 -h 0.005 -e (meta.OnlineBagging -l (meta.WEKAClassifier -l weka.classifiers.functions.MultilayerPerceptron) -d 0.005) -d (EarlyDriftDetectionMethod -w 0.75 -d 0.75)) -s (ArffFileStream -f data/PAKDD/Modeling_Data.arff) -e (SimpleClassificationPerformanceEvaluator -r 16666.67) -f 30 -i -1 -d data/PAKDD/Modeling_DataMLP/Modeling_DataMLP.dump -o data/PAKDD/Modeling_DataMLP/Modeling_DataMLP.out"
+java -cp target/DDD-0.0.1-SNAPSHOT.jar moa.DoTask "EvaluatePrequential -l (meta.DDD -w 1 -l 1 -h 0.005 -e (meta.OnlineBagging -l (meta.WEKAClassifier -l weka.classifiers.functions.MultilayerPerceptron) -d 0.005) -d (EarlyDriftDetectionMethod -w 0.75 -d 0.75)) -s (ArffFileStream -f data/PAKDD/Modeling_Data.arff) -e (SimpleClassificationPerformanceEvaluator -r 16666.67) -f 225 -i -1 -d data/PAKDD/Modeling_DataMLP/Modeling_DataMLP.dump -o data/PAKDD/Modeling_DataMLP/Modeling_DataMLP.out"
 
 
 Running KDD:
@@ -43,7 +43,7 @@ driftDetectionMethodOption warningOption = 1.15 (gamma)
 driftDetectionMethodOption outControlOption = 1.15 (gamma)
 reset = 164673.67
 
-java -cp target/DDD-0.0.1-SNAPSHOT.jar moa.DoTask "EvaluatePrequential -l (meta.DDD -w 1 -l 1 -h 0.005 -e (meta.OnlineBagging -l bayes.NaiveBayes -d 0.005) -d (EarlyDriftDetectionMethod -w 1.15 -d 1.15)) -s (ArffFileStream -f data/kdd/kddcup.data_10_percent_processed.arff) -e (SimpleClassificationPerformanceEvaluator -r 164673.67) -f 30 -i -1 -d data/kdd/kddcup.data_10_percent_processedNB/kddcup.data_10_percent_processedNB.dump -o data/kdd/kddcup.data_10_percent_processedNB/kddcup.data_10_percent_processedNB.out"
+java -cp target/DDD-0.0.1-SNAPSHOT.jar moa.DoTask "EvaluatePrequential -l (meta.DDD -w 1 -l 1 -h 0.005 -e (meta.OnlineBagging -l bayes.NaiveBayes -d 0.005) -d (EarlyDriftDetectionMethod -w 1.15 -d 1.15)) -s (ArffFileStream -f data/kdd/kddcup.data_10_percent_processed.arff) -e (SimpleClassificationPerformanceEvaluator -r 164673.67) -f 225 -i -1 -d data/kdd/kddcup.data_10_percent_processedNB/kddcup.data_10_percent_processedNB.dump -o data/kdd/kddcup.data_10_percent_processedNB/kddcup.data_10_percent_processedNB.out"
 
 weight = 1
 lowDiversity = 1
@@ -51,9 +51,9 @@ highDiversity = 0.005
 baseEnsembleLearner baseLearnerOption =  MLP
 driftDetectionMethodOption warningOption = 0.95 (gamma)
 driftDetectionMethodOption outControlOption = 0.95 (gamma)
-reset = 164674
+reset = 164673.67
 
-java -cp target/DDD-0.0.1-SNAPSHOT.jar moa.DoTask "EvaluatePrequential -l (meta.DDD -w 1 -l 1 -h 0.005 -e (meta.OnlineBagging -l (meta.WEKAClassifier -l weka.classifiers.functions.MultilayerPerceptron) -d 0.005) -d (EarlyDriftDetectionMethod -w 0.95 -d 0.95)) -s (ArffFileStream -f data/kdd/kddcup.data_10_percent_processed.arff) -e (SimpleClassificationPerformanceEvaluator -r 164673.67) -f 30 -i -1 -d data/kdd/kddcup.data_10_percent_processedMLP/kddcup.data_10_percent_processedMLP.dump -o data/kdd/kddcup.data_10_percent_processedMLP/kddcup.data_10_percent_processedMLP.out"
+java -cp target/DDD-0.0.1-SNAPSHOT.jar moa.DoTask "EvaluatePrequential -l (meta.DDD -w 1 -l 1 -h 0.005 -e (meta.OnlineBagging -l (meta.WEKAClassifier -l weka.classifiers.functions.MultilayerPerceptron) -d 0.005) -d (EarlyDriftDetectionMethod -w 0.95 -d 0.95)) -s (ArffFileStream -f data/kdd/kddcup.data_10_percent_processed.arff) -e (SimpleClassificationPerformanceEvaluator -r 164673.67) -f 225 -i -1 -d data/kdd/kddcup.data_10_percent_processedMLP/kddcup.data_10_percent_processedMLP.dump -o data/kdd/kddcup.data_10_percent_processedMLP/kddcup.data_10_percent_processedMLP.out"
 
 
 Running elecdata:
@@ -65,7 +65,7 @@ baseEnsembleLearner baseLearnerOption =  bayes.NaiveBayes
 FA = 45
 reset = 15104
 
-java -cp target/DDD-0.0.1-SNAPSHOT.jar moa.DoTask "EvaluatePrequential -l (meta.DDD -w 1 -l 1 -h 0.1 -e (meta.OnlineBagging -l bayes.NaiveBayes -d 0.1) -f 45) -s (ArffFileStream -f data/elecdata/elec2.arff) -e (SimpleClassificationPerformanceEvaluator -r 15104) -f 30 -i -1 -d data/elecdata/elec2NB/elec2NB.dump -o data/elecdata/elec2NB/elec2NB.out"
+java -cp target/DDD-0.0.1-SNAPSHOT.jar moa.DoTask "EvaluatePrequential -l (meta.DDD -w 1 -l 1 -h 0.1 -e (meta.OnlineBagging -l bayes.NaiveBayes -d 0.1) -f 45) -s (ArffFileStream -f data/elecdata/elec2.arff) -e (SimpleClassificationPerformanceEvaluator -r 15104) -f 225 -i -1 -d data/elecdata/elec2NB/elec2NB.dump -o data/elecdata/elec2NB/elec2NB.out"
 
 weight = 1
 lowDiversity = 1
@@ -74,7 +74,42 @@ baseEnsembleLearner baseLearnerOption =  bayes.NaiveBayes
 FA = 5
 reset = 15104
 
-java -cp target/DDD-0.0.1-SNAPSHOT.jar moa.DoTask "EvaluatePrequential -l (meta.DDD -w 1 -l 1 -h 0.05 -e (meta.OnlineBagging -l bayes.NaiveBayes -d 0.05) -f 5) -s (ArffFileStream -f data/elecdata/elec2.arff) -e (SimpleClassificationPerformanceEvaluator -r 15104) -f 30 -i -1 -d data/elecdata/elec2MLP/elec2MLP.dump -o data/elecdata/elec2MLP/elec2MLP.out"
+java -cp target/DDD-0.0.1-SNAPSHOT.jar moa.DoTask "EvaluatePrequential -l (meta.DDD -w 1 -l 1 -h 0.05 -e (meta.OnlineBagging -l bayes.NaiveBayes -d 0.05) -f 5) -s (ArffFileStream -f data/elecdata/elec2.arff) -e (SimpleClassificationPerformanceEvaluator -r 15104) -f 225 -i -1 -d data/elecdata/elec2MLP/elec2MLP.dump -o data/elecdata/elec2MLP/elec2MLP.out"
+
+
+Running bool:
+
+weight = 1
+lowDiversity = 1
+highDiversity = 0.1
+baseEnsembleLearner baseLearnerOption =  trees.HoeffdingTree
+driftDetectionMethodOption warningOption = 0.95 (gamma)
+driftDetectionMethodOption outControlOption = 0.95 (gamma)
+reset = half
+
+java -cp target/DDD-0.0.1-SNAPSHOT.jar moa.DoTask "EvaluatePrequential -l (meta.DDD -w 1 -l 1 -h 0.1 -e (meta.OnlineBagging -l trees.HoeffdingTree -d 0.1) -d (EarlyDriftDetectionMethod -w 0.95 -d 0.95)) -s (ArffFileStream -f data/ArtificialDataSets/bool1000/dataBool1000Sev1Sp1Test.arff) -e (SimpleClassificationPerformanceEvaluator -r 100) -f 25 -i -1 -d data/ArtificialDataSets/bool1000/dataBool1000Sev1Sp1Test/dataBool1000Sev1Sp1Test.dump -o data/ArtificialDataSets/bool1000/dataBool1000Sev1Sp1Test/dataBool1000Sev1Sp1Test.out"
+
+java -cp target/DDD-0.0.1-SNAPSHOT.jar moa.DoTask "EvaluatePrequential -l (meta.DDD -w 1 -l 1 -h 0.1 -e (meta.OnlineBagging -l trees.HoeffdingTree -d 0.1) -d (EarlyDriftDetectionMethod -w 0.95 -d 0.95)) -s (ArffFileStream -f data/ArtificialDataSets/bool1000/dataBool1000Sev1Sp1Train.arff) -e (SimpleClassificationPerformanceEvaluator -r 500) -f 25 -i -1 -d data/ArtificialDataSets/bool1000/dataBool1000Sev1Sp1Train/dataBool1000Sev1Sp1Train.dump -o data/ArtificialDataSets/bool1000/dataBool1000Sev1Sp1Train/dataBool1000Sev1Sp1Train.out"
+
+java -cp target/DDD-0.0.1-SNAPSHOT.jar moa.DoTask "EvaluatePrequential -l (meta.DDD -w 1 -l 1 -h 0.1 -e (meta.OnlineBagging -l trees.HoeffdingTree -d 0.1) -d (EarlyDriftDetectionMethod -w 0.95 -d 0.95)) -s (ArffFileStream -f data/ArtificialDataSets/bool1000/dataBool1000Sev1Sp2Train.arff) -e (SimpleClassificationPerformanceEvaluator -r 500) -f 25 -i -1 -d data/ArtificialDataSets/bool1000/dataBool1000Sev1Sp2Train/dataBool1000Sev1Sp2Train.dump -o data/ArtificialDataSets/bool1000/dataBool1000Sev1Sp2Train/dataBool1000Sev1Sp2Train.out"
+
+java -cp target/DDD-0.0.1-SNAPSHOT.jar moa.DoTask "EvaluatePrequential -l (meta.DDD -w 1 -l 1 -h 0.1 -e (meta.OnlineBagging -l trees.HoeffdingTree -d 0.1) -d (EarlyDriftDetectionMethod -w 0.95 -d 0.95)) -s (ArffFileStream -f data/ArtificialDataSets/bool1000/dataBool1000Sev1Sp3Train.arff) -e (SimpleClassificationPerformanceEvaluator -r 500) -f 25 -i -1 -d data/ArtificialDataSets/bool1000/dataBool1000Sev1Sp3Train/dataBool1000Sev1Sp3Train.dump -o data/ArtificialDataSets/bool1000/dataBool1000Sev1Sp3Train/dataBool1000Sev1Sp3Train.out"
+
+java -cp target/DDD-0.0.1-SNAPSHOT.jar moa.DoTask "EvaluatePrequential -l (meta.DDD -w 1 -l 1 -h 0.1 -e (meta.OnlineBagging -l trees.HoeffdingTree -d 0.1) -d (EarlyDriftDetectionMethod -w 0.95 -d 0.95)) -s (ArffFileStream -f data/ArtificialDataSets/bool1000/dataBool1000Sev2Sp1Test.arff) -e (SimpleClassificationPerformanceEvaluator -r 100) -f 25 -i -1 -d data/ArtificialDataSets/bool1000/dataBool1000Sev2Sp1Test/dataBool1000Sev2Sp1Test.dump -o data/ArtificialDataSets/bool1000/dataBool1000Sev2Sp1Test/dataBool1000Sev2Sp1Test.out"
+
+java -cp target/DDD-0.0.1-SNAPSHOT.jar moa.DoTask "EvaluatePrequential -l (meta.DDD -w 1 -l 1 -h 0.1 -e (meta.OnlineBagging -l trees.HoeffdingTree -d 0.1) -d (EarlyDriftDetectionMethod -w 0.95 -d 0.95)) -s (ArffFileStream -f data/ArtificialDataSets/bool1000/dataBool1000Sev2Sp1Train.arff) -e (SimpleClassificationPerformanceEvaluator -r 500) -f 25 -i -1 -d data/ArtificialDataSets/bool1000/dataBool1000Sev2Sp1Train/dataBool1000Sev2Sp1Train.dump -o data/ArtificialDataSets/bool1000/dataBool1000Sev2Sp1Train/dataBool1000Sev2Sp1Train.out"
+
+java -cp target/DDD-0.0.1-SNAPSHOT.jar moa.DoTask "EvaluatePrequential -l (meta.DDD -w 1 -l 1 -h 0.1 -e (meta.OnlineBagging -l trees.HoeffdingTree -d 0.1) -d (EarlyDriftDetectionMethod -w 0.95 -d 0.95)) -s (ArffFileStream -f data/ArtificialDataSets/bool1000/dataBool1000Sev2Sp2Train.arff) -e (SimpleClassificationPerformanceEvaluator -r 500) -f 25 -i -1 -d data/ArtificialDataSets/bool1000/dataBool1000Sev2Sp2Train/dataBool1000Sev2Sp2Train.dump -o data/ArtificialDataSets/bool1000/dataBool1000Sev2Sp2Train/dataBool1000Sev2Sp2Train.out"
+
+java -cp target/DDD-0.0.1-SNAPSHOT.jar moa.DoTask "EvaluatePrequential -l (meta.DDD -w 1 -l 1 -h 0.1 -e (meta.OnlineBagging -l trees.HoeffdingTree -d 0.1) -d (EarlyDriftDetectionMethod -w 0.95 -d 0.95)) -s (ArffFileStream -f data/ArtificialDataSets/bool1000/dataBool1000Sev2Sp3Train.arff) -e (SimpleClassificationPerformanceEvaluator -r 500) -f 25 -i -1 -d data/ArtificialDataSets/bool1000/dataBool1000Sev2Sp3Train/dataBool1000Sev2Sp3Train.dump -o data/ArtificialDataSets/bool1000/dataBool1000Sev2Sp3Train/dataBool1000Sev2Sp3Train.out"
+
+java -cp target/DDD-0.0.1-SNAPSHOT.jar moa.DoTask "EvaluatePrequential -l (meta.DDD -w 1 -l 1 -h 0.1 -e (meta.OnlineBagging -l trees.HoeffdingTree -d 0.1) -d (EarlyDriftDetectionMethod -w 0.95 -d 0.95)) -s (ArffFileStream -f data/ArtificialDataSets/bool1000/dataBool1000Sev3Sp1Test.arff) -e (SimpleClassificationPerformanceEvaluator -r 100) -f 25 -i -1 -d data/ArtificialDataSets/bool1000/dataBool1000Sev3Sp1Test/dataBool1000Sev3Sp1Test.dump -o data/ArtificialDataSets/bool1000/dataBool1000Sev3Sp1Test/dataBool1000Sev3Sp1Test.out"
+
+java -cp target/DDD-0.0.1-SNAPSHOT.jar moa.DoTask "EvaluatePrequential -l (meta.DDD -w 1 -l 1 -h 0.1 -e (meta.OnlineBagging -l trees.HoeffdingTree -d 0.1) -d (EarlyDriftDetectionMethod -w 0.95 -d 0.95)) -s (ArffFileStream -f data/ArtificialDataSets/bool1000/dataBool1000Sev3Sp1Train.arff) -e (SimpleClassificationPerformanceEvaluator -r 500) -f 25 -i -1 -d data/ArtificialDataSets/bool1000/dataBool1000Sev3Sp1Train/dataBool1000Sev3Sp1Train.dump -o data/ArtificialDataSets/bool1000/dataBool1000Sev3Sp1Train/dataBool1000Sev3Sp1Train.out"
+
+java -cp target/DDD-0.0.1-SNAPSHOT.jar moa.DoTask "EvaluatePrequential -l (meta.DDD -w 1 -l 1 -h 0.1 -e (meta.OnlineBagging -l trees.HoeffdingTree -d 0.1) -d (EarlyDriftDetectionMethod -w 0.95 -d 0.95)) -s (ArffFileStream -f data/ArtificialDataSets/bool1000/dataBool1000Sev3Sp2Train.arff) -e (SimpleClassificationPerformanceEvaluator -r 500) -f 25 -i -1 -d data/ArtificialDataSets/bool1000/dataBool1000Sev3Sp2Train/dataBool1000Sev3Sp2Train.dump -o data/ArtificialDataSets/bool1000/dataBool1000Sev3Sp2Train/dataBool1000Sev3Sp2Train.out"
+
+java -cp target/DDD-0.0.1-SNAPSHOT.jar moa.DoTask "EvaluatePrequential -l (meta.DDD -w 1 -l 1 -h 0.1 -e (meta.OnlineBagging -l trees.HoeffdingTree -d 0.1) -d (EarlyDriftDetectionMethod -w 0.95 -d 0.95)) -s (ArffFileStream -f data/ArtificialDataSets/bool1000/dataBool1000Sev3Sp3Train.arff) -e (SimpleClassificationPerformanceEvaluator -r 500) -f 25 -i -1 -d data/ArtificialDataSets/bool1000/dataBool1000Sev3Sp3Train/dataBool1000Sev3Sp3Train.dump -o data/ArtificialDataSets/bool1000/dataBool1000Sev3Sp3Train/dataBool1000Sev3Sp3Train.out"
 
 
 Running circle:
@@ -110,41 +145,6 @@ java -cp target/DDD-0.0.1-SNAPSHOT.jar moa.DoTask "EvaluatePrequential -l (meta.
 java -cp target/DDD-0.0.1-SNAPSHOT.jar moa.DoTask "EvaluatePrequential -l (meta.DDD -w 1 -l 1 -h 0.05 -e (meta.OnlineBagging -l trees.HoeffdingTree -d 0.05) -d (EarlyDriftDetectionMethod -w 0.95 -d 0.95)) -s (ArffFileStream -f data/ArtificialDataSets/circleG/dataCircleGSev3Sp2Train.arff) -e (SimpleClassificationPerformanceEvaluator -r 1000) -f 10 -i -1 -d data/ArtificialDataSets/circleG/dataCircleGSev3Sp2Train/dataCircleGSev3Sp2Train.dump -o data/ArtificialDataSets/circleG/dataCircleGSev3Sp2Train/dataCircleGSev3Sp2Train.out"
 
 java -cp target/DDD-0.0.1-SNAPSHOT.jar moa.DoTask "EvaluatePrequential -l (meta.DDD -w 1 -l 1 -h 0.05 -e (meta.OnlineBagging -l trees.HoeffdingTree -d 0.05) -d (EarlyDriftDetectionMethod -w 0.95 -d 0.95)) -s (ArffFileStream -f data/ArtificialDataSets/circleG/dataCircleGSev3Sp3Train.arff) -e (SimpleClassificationPerformanceEvaluator -r 1000) -f 10 -i -1 -d data/ArtificialDataSets/circleG/dataCircleGSev3Sp3Train/dataCircleGSev3Sp3Train.dump -o data/ArtificialDataSets/circleG/dataCircleGSev3Sp3Train/dataCircleGSev3Sp3Train.out"
-
-
-Running bool:
-
-weight = 1
-lowDiversity = 1
-highDiversity = 0.1
-baseEnsembleLearner baseLearnerOption =  trees.HoeffdingTree
-driftDetectionMethodOption warningOption = 0.95 (gamma)
-driftDetectionMethodOption outControlOption = 0.95 (gamma)
-reset = half
-
-java -cp target/DDD-0.0.1-SNAPSHOT.jar moa.DoTask "EvaluatePrequential -l (meta.DDD -w 1 -l 1 -h 0.1 -e (meta.OnlineBagging -l trees.HoeffdingTree -d 0.1) -d (EarlyDriftDetectionMethod -w 0.95 -d 0.95)) -s (ArffFileStream -f data/ArtificialDataSets/bool1000/dataBool1000Sev1Sp1Test.arff) -e (SimpleClassificationPerformanceEvaluator -r 100) -f 10 -i -1 -d data/ArtificialDataSets/bool1000/dataBool1000Sev1Sp1Test/dataBool1000Sev1Sp1Test.dump -o data/ArtificialDataSets/bool1000/dataBool1000Sev1Sp1Test/dataBool1000Sev1Sp1Test.out"
-
-java -cp target/DDD-0.0.1-SNAPSHOT.jar moa.DoTask "EvaluatePrequential -l (meta.DDD -w 1 -l 1 -h 0.1 -e (meta.OnlineBagging -l trees.HoeffdingTree -d 0.1) -d (EarlyDriftDetectionMethod -w 0.95 -d 0.95)) -s (ArffFileStream -f data/ArtificialDataSets/bool1000/dataBool1000Sev1Sp1Train.arff) -e (SimpleClassificationPerformanceEvaluator -r 500) -f 10 -i -1 -d data/ArtificialDataSets/bool1000/dataBool1000Sev1Sp1Train/dataBool1000Sev1Sp1Train.dump -o data/ArtificialDataSets/bool1000/dataBool1000Sev1Sp1Train/dataBool1000Sev1Sp1Train.out"
-
-java -cp target/DDD-0.0.1-SNAPSHOT.jar moa.DoTask "EvaluatePrequential -l (meta.DDD -w 1 -l 1 -h 0.1 -e (meta.OnlineBagging -l trees.HoeffdingTree -d 0.1) -d (EarlyDriftDetectionMethod -w 0.95 -d 0.95)) -s (ArffFileStream -f data/ArtificialDataSets/bool1000/dataBool1000Sev1Sp2Train.arff) -e (SimpleClassificationPerformanceEvaluator -r 500) -f 10 -i -1 -d data/ArtificialDataSets/bool1000/dataBool1000Sev1Sp2Train/dataBool1000Sev1Sp2Train.dump -o data/ArtificialDataSets/bool1000/dataBool1000Sev1Sp2Train/dataBool1000Sev1Sp2Train.out"
-
-java -cp target/DDD-0.0.1-SNAPSHOT.jar moa.DoTask "EvaluatePrequential -l (meta.DDD -w 1 -l 1 -h 0.1 -e (meta.OnlineBagging -l trees.HoeffdingTree -d 0.1) -d (EarlyDriftDetectionMethod -w 0.95 -d 0.95)) -s (ArffFileStream -f data/ArtificialDataSets/bool1000/dataBool1000Sev1Sp3Train.arff) -e (SimpleClassificationPerformanceEvaluator -r 500) -f 10 -i -1 -d data/ArtificialDataSets/bool1000/dataBool1000Sev1Sp3Train/dataBool1000Sev1Sp3Train.dump -o data/ArtificialDataSets/bool1000/dataBool1000Sev1Sp3Train/dataBool1000Sev1Sp3Train.out"
-
-java -cp target/DDD-0.0.1-SNAPSHOT.jar moa.DoTask "EvaluatePrequential -l (meta.DDD -w 1 -l 1 -h 0.1 -e (meta.OnlineBagging -l trees.HoeffdingTree -d 0.1) -d (EarlyDriftDetectionMethod -w 0.95 -d 0.95)) -s (ArffFileStream -f data/ArtificialDataSets/bool1000/dataBool1000Sev2Sp1Test.arff) -e (SimpleClassificationPerformanceEvaluator -r 100) -f 10 -i -1 -d data/ArtificialDataSets/bool1000/dataBool1000Sev2Sp1Test/dataBool1000Sev2Sp1Test.dump -o data/ArtificialDataSets/bool1000/dataBool1000Sev2Sp1Test/dataBool1000Sev2Sp1Test.out"
-
-java -cp target/DDD-0.0.1-SNAPSHOT.jar moa.DoTask "EvaluatePrequential -l (meta.DDD -w 1 -l 1 -h 0.1 -e (meta.OnlineBagging -l trees.HoeffdingTree -d 0.1) -d (EarlyDriftDetectionMethod -w 0.95 -d 0.95)) -s (ArffFileStream -f data/ArtificialDataSets/bool1000/dataBool1000Sev2Sp1Train.arff) -e (SimpleClassificationPerformanceEvaluator -r 500) -f 10 -i -1 -d data/ArtificialDataSets/bool1000/dataBool1000Sev2Sp1Train/dataBool1000Sev2Sp1Train.dump -o data/ArtificialDataSets/bool1000/dataBool1000Sev2Sp1Train/dataBool1000Sev2Sp1Train.out"
-
-java -cp target/DDD-0.0.1-SNAPSHOT.jar moa.DoTask "EvaluatePrequential -l (meta.DDD -w 1 -l 1 -h 0.1 -e (meta.OnlineBagging -l trees.HoeffdingTree -d 0.1) -d (EarlyDriftDetectionMethod -w 0.95 -d 0.95)) -s (ArffFileStream -f data/ArtificialDataSets/bool1000/dataBool1000Sev2Sp2Train.arff) -e (SimpleClassificationPerformanceEvaluator -r 500) -f 10 -i -1 -d data/ArtificialDataSets/bool1000/dataBool1000Sev2Sp2Train/dataBool1000Sev2Sp2Train.dump -o data/ArtificialDataSets/bool1000/dataBool1000Sev2Sp2Train/dataBool1000Sev2Sp2Train.out"
-
-java -cp target/DDD-0.0.1-SNAPSHOT.jar moa.DoTask "EvaluatePrequential -l (meta.DDD -w 1 -l 1 -h 0.1 -e (meta.OnlineBagging -l trees.HoeffdingTree -d 0.1) -d (EarlyDriftDetectionMethod -w 0.95 -d 0.95)) -s (ArffFileStream -f data/ArtificialDataSets/bool1000/dataBool1000Sev2Sp3Train.arff) -e (SimpleClassificationPerformanceEvaluator -r 500) -f 10 -i -1 -d data/ArtificialDataSets/bool1000/dataBool1000Sev2Sp3Train/dataBool1000Sev2Sp3Train.dump -o data/ArtificialDataSets/bool1000/dataBool1000Sev2Sp3Train/dataBool1000Sev2Sp3Train.out"
-
-java -cp target/DDD-0.0.1-SNAPSHOT.jar moa.DoTask "EvaluatePrequential -l (meta.DDD -w 1 -l 1 -h 0.1 -e (meta.OnlineBagging -l trees.HoeffdingTree -d 0.1) -d (EarlyDriftDetectionMethod -w 0.95 -d 0.95)) -s (ArffFileStream -f data/ArtificialDataSets/bool1000/dataBool1000Sev3Sp1Test.arff) -e (SimpleClassificationPerformanceEvaluator -r 100) -f 10 -i -1 -d data/ArtificialDataSets/bool1000/dataBool1000Sev3Sp1Test/dataBool1000Sev3Sp1Test.dump -o data/ArtificialDataSets/bool1000/dataBool1000Sev3Sp1Test/dataBool1000Sev3Sp1Test.out"
-
-java -cp target/DDD-0.0.1-SNAPSHOT.jar moa.DoTask "EvaluatePrequential -l (meta.DDD -w 1 -l 1 -h 0.1 -e (meta.OnlineBagging -l trees.HoeffdingTree -d 0.1) -d (EarlyDriftDetectionMethod -w 0.95 -d 0.95)) -s (ArffFileStream -f data/ArtificialDataSets/bool1000/dataBool1000Sev3Sp1Train.arff) -e (SimpleClassificationPerformanceEvaluator -r 500) -f 10 -i -1 -d data/ArtificialDataSets/bool1000/dataBool1000Sev3Sp1Train/dataBool1000Sev3Sp1Train.dump -o data/ArtificialDataSets/bool1000/dataBool1000Sev3Sp1Train/dataBool1000Sev3Sp1Train.out"
-
-java -cp target/DDD-0.0.1-SNAPSHOT.jar moa.DoTask "EvaluatePrequential -l (meta.DDD -w 1 -l 1 -h 0.1 -e (meta.OnlineBagging -l trees.HoeffdingTree -d 0.1) -d (EarlyDriftDetectionMethod -w 0.95 -d 0.95)) -s (ArffFileStream -f data/ArtificialDataSets/bool1000/dataBool1000Sev3Sp2Train.arff) -e (SimpleClassificationPerformanceEvaluator -r 500) -f 10 -i -1 -d data/ArtificialDataSets/bool1000/dataBool1000Sev3Sp2Train/dataBool1000Sev3Sp2Train.dump -o data/ArtificialDataSets/bool1000/dataBool1000Sev3Sp2Train/dataBool1000Sev3Sp2Train.out"
-
-java -cp target/DDD-0.0.1-SNAPSHOT.jar moa.DoTask "EvaluatePrequential -l (meta.DDD -w 1 -l 1 -h 0.1 -e (meta.OnlineBagging -l trees.HoeffdingTree -d 0.1) -d (EarlyDriftDetectionMethod -w 0.95 -d 0.95)) -s (ArffFileStream -f data/ArtificialDataSets/bool1000/dataBool1000Sev3Sp3Train.arff) -e (SimpleClassificationPerformanceEvaluator -r 500) -f 10 -i -1 -d data/ArtificialDataSets/bool1000/dataBool1000Sev3Sp3Train/dataBool1000Sev3Sp3Train.dump -o data/ArtificialDataSets/bool1000/dataBool1000Sev3Sp3Train/dataBool1000Sev3Sp3Train.out"
 
 
 Running line:
@@ -252,7 +252,7 @@ java -cp target/DDD-0.0.1-SNAPSHOT.jar moa.DoTask "EvaluatePrequential -l (meta.
 java -cp target/DDD-0.0.1-SNAPSHOT.jar moa.DoTask "EvaluatePrequential -l (meta.DDD -w 1 -l 1 -h 0.005 -e (meta.OnlineBagging -l trees.HoeffdingTree -d 0.005) -d (EarlyDriftDetectionMethod -w 0.95 -d 0.95)) -s (ArffFileStream -f data/ArtificialDataSets/sine/dataSineSev3Sp3Train.arff) -e (SimpleClassificationPerformanceEvaluator -r 1000) -f 10 -i -1 -d data/ArtificialDataSets/sine/dataSineSev3Sp3Train/dataSineSev3Sp3Train.dump -o data/ArtificialDataSets/sine/dataSineSev3Sp3Train/dataSineSev3Sp3Train.out"
 
 
-Running sine:
+Running sineH:
 
 weight = 1
 lowDiversity = 1
