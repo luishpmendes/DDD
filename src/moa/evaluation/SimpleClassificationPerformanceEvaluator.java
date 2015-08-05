@@ -9,7 +9,7 @@ import moa.options.FloatOption;
 import moa.tasks.TaskMonitor;
 
 public class SimpleClassificationPerformanceEvaluator extends AbstractOptionHandler implements ClassificationPerformanceEvaluator {
-	/** The number of instances before reseting the accuracy */
+	/** The weight of instances before reseting the accuracy */
     public FloatOption resetOption = new FloatOption("reset", 'r', "The weight of instances before reseting the accuracy.", 30, 0, Integer.MAX_VALUE);
 	
     protected double weightObserved;
@@ -61,6 +61,10 @@ public class SimpleClassificationPerformanceEvaluator extends AbstractOptionHand
         }
     }
     
+    /**
+     * Resets this evaluator. It must be similar to
+     * starting a new evaluator from scratch.
+     */
     public void reset() {
         reset(this.numClasses);
     }
@@ -78,7 +82,14 @@ public class SimpleClassificationPerformanceEvaluator extends AbstractOptionHand
         this.weightCorrectNoChangeClassifier = 0.0;
         this.lastSeenClass = 0;
     }
-    
+
+    /**
+     * Adds a learning result to this evaluator.
+     *
+     * @param inst the instance to be classified
+     * @param classVotes an array containing the estimated membership
+     * probabilities of the test instance in each class
+     */
     public void addResult(Instance inst, double[] classVotes) {
         double weight = inst.weight();
         int trueClass = (int) inst.classValue();
@@ -99,7 +110,12 @@ public class SimpleClassificationPerformanceEvaluator extends AbstractOptionHand
         }
         this.lastSeenClass = trueClass;
     }
-    
+
+    /**
+     * Gets the current measurements monitored by this evaluator.
+     *
+     * @return an array of measurements monitored by this evaluator
+     */
     public Measurement[] getPerformanceMeasurements() {
         return new Measurement[]{
             new Measurement("classified instances", this.getTotalWeightObserved()),
@@ -109,10 +125,27 @@ public class SimpleClassificationPerformanceEvaluator extends AbstractOptionHand
         };
     }
 
+    /**
+     * Returns a string representation of this object.
+     * Used in <code>AbstractMOAObject.toString</code>
+     * to give a string representation of the object.
+     *
+     * @param sb	the stringbuilder to add the description
+     * @param indent	the number of characters to indent
+     */
     public void getDescription(StringBuilder sb, int indent) {
         Measurement.getMeasurementsDescription(getPerformanceMeasurements(), sb, indent);
     }
 
+    /**
+     * This method describes the implementation of how to prepare this object for use.
+     * All classes that extends this class have to implement <code>prepareForUseImpl</code>
+     * and not <code>prepareForUse</code> since
+     * <code>prepareForUse</code> calls <code>prepareForUseImpl</code>.
+     *
+     * @param monitor the TaskMonitor to use
+     * @param repository  the ObjectRepository to use
+     */
 	@Override
 	protected void prepareForUseImpl(TaskMonitor monitor, ObjectRepository repository) {
 		this.reset();

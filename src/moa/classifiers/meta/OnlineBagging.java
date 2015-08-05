@@ -11,6 +11,7 @@ import weka.core.Instance;
  * Incremental on-line bagging of Oza and Russell.
  *
  * <p>Parameters:</p> <ul>
+ * <li>-r : Seed for random behaviour of the classifier.</li>
  * <li>-l : Classifier to train</li>
  * <li>-s : The number of models in the bag</li> </ul>
  * <li>-d : Parameter used to encourage more or less diversity</li>
@@ -81,17 +82,37 @@ public class OnlineBagging extends AbstractEnsemble {
         return true;
     }
 
+    /**
+     * Returns a string representation of the model.
+     *
+     * @param out	the stringbuilder to add the description
+     * @param indent	the number of characters to indent
+     */
     @Override
     public void getModelDescription(StringBuilder out, int indent) {
         // TODO Auto-generated method stub
     }
 
+    /**
+     * Gets the current measurements of this classifier.<br><br>
+     * 
+     * The reason for ...Impl methods: ease programmer burden by not requiring 
+     * them to remember calls to super in overridden methods. 
+     * Note that this will produce compiler errors if not overridden.
+     *
+     * @return an array of measurements to be used in evaluation tasks
+     */
     @Override
     protected Measurement[] getModelMeasurementsImpl() {
-        return new Measurement[]{new Measurement("ensemble size",
-                    this.ensemble != null ? this.ensemble.length : 0)};
+        return new Measurement[]{new Measurement("ensemble size", this.ensemble != null ? this.ensemble.length : 0)};
     }
 
+    /**
+     * Gets the classifiers of this ensemble.
+     * Returns null if this classifier is a single classifier.
+     *
+     * @return an array of the classifiers of the ensemble
+     */
     @Override
     public Classifier[] getSubClassifiers() {
         return this.ensemble.clone();

@@ -12,26 +12,22 @@ import weka.core.Instance;
  * 
  * <p>Parameters:</p>
  * <ul>
+ * <li>-r : Seed for random behaviour of the classifier.</li>
  * <li>-l : Classifier to train</li>
  * <li>-s : The number of models in the ensemble</li>
  * <li>-d : Parameter used to encourage more or less diversity</li>
  * </ul>
  * @author Luis H. P. Mendes (luishpmendes@gmail.com)
  */
-public abstract class AbstractEnsemble extends AbstractClassifier implements
-		Ensemble {
-
+public abstract class AbstractEnsemble extends AbstractClassifier implements Ensemble {
 	/** Classiﬁer to train */
-    public ClassOption baseLearnerOption = new ClassOption("baseLearner", 'l',
-            "Classifier to train.", Classifier.class, "trees.HoeffdingTree");
+    public ClassOption baseLearnerOption = new ClassOption("baseLearner", 'l', "Classifier to train.", Classifier.class, "trees.HoeffdingTree");
 
     /** The number of models in the ensemble */
-    public IntOption ensembleSizeOption = new IntOption("ensembleSize", 'n',
-            "The number of models in the ensemble.", 10, 1, Integer.MAX_VALUE);
+    public IntOption ensembleSizeOption = new IntOption("ensembleSize", 'n', "The number of models in the ensemble.", 10, 1, Integer.MAX_VALUE);
 
     /** Parameter used to encourage more or less diversity */
-	public FloatOption lambdaOption = new FloatOption("lambda", 'd',
-			"Parameter used to encourage more or less diversity.", 1.0);
+	public FloatOption lambdaOption = new FloatOption("lambda", 'd', "Parameter used to encourage more or less diversity.", 1.0);
 
     protected Classifier[] ensemble;
 
@@ -83,13 +79,23 @@ public abstract class AbstractEnsemble extends AbstractClassifier implements
     public void trainOnInstanceImpl(Instance inst) {
     	this.trainOnInstanceImpl(inst, this.lambdaOption.getValue());
     }
-    
+
+    /**
+     * Sets the seed for random number generation.
+     *
+     * @param s the seed
+     */
     @Override
     public void setRandomSeed(int s) {
     	super.setRandomSeed(s);
         this.classifierRandom.setSeed(s);
     }
-    
+
+    /**
+     * Resets this classifier. It must be similar to
+     * starting a new classifier from scratch.
+     *
+     */
     @Override
     public void resetLearning() {
         this.trainingWeightSeenByModel = 0.0;
@@ -98,10 +104,6 @@ public abstract class AbstractEnsemble extends AbstractClassifier implements
         		this.randomSeedOption = new IntOption("randomSeed", 'r', "Seed for random behaviour of the classifier.", this.randomSeed);
         	}
         	this.randomSeedOption.setValue(this.randomSeed);
-			if (this.randomSeedOption.getValue() == 1 && this.randomSeed == 1) {
-				this.randomSeed = (int) System.currentTimeMillis();
-				this.randomSeedOption.setValue(this.randomSeed);
-			}
 			this.classifierRandom = new Random(this.randomSeed);
         }
         resetLearningImpl();

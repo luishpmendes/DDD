@@ -18,11 +18,13 @@ import moa.options.IntOption;
  * 
  * <p>Parameters:</p>
  * <ul>
+ * <li>-r : Seed for random behaviour of the classifier.</li>
  * <li>-w : Multiplier constant for the weight of the old low diversity ensemble</li>
  * <li>-e : Online ensemble learning algorithm</li>
  * <li>-l : Parameter for ensemble learning with low diversity</li>
  * <li>-h : Parameter for ensemble learning with low diversity</li>
  * <li>-d : Drift detection method</li>
+ * <li>-f : Number of time steps between each forced drift.</li>
  * </ul>
  *
  * @author Luis H. P. Mendes (luishpmendes@gmail.com)
@@ -48,6 +50,9 @@ public class DDD extends AbstractClassifier {
 	/** Drift detection method */
 	public ClassOption driftDetectionMethodOption = new ClassOption("driftDetectionMethodOption", 'd', "Drift detection method.", DriftDetectionMethod.class, "EarlyDriftDetectionMethod");
 
+	/** Number of time steps between each forced drift */
+	public IntOption forceDriftOption = new IntOption("forceDriftOption", 'f', "Number of time steps between each forced drift.", -1);
+	
 	/* online ensembles */
 	private Ensemble hnl; /* new low diversity */
 	private Ensemble hnh; /* new high diversity */
@@ -176,82 +181,6 @@ public class DDD extends AbstractClassifier {
 		}
 		this.ddmLevel = ((DriftDetectionMethod) this.getPreparedClassOption(this.driftDetectionMethodOption)).computeNextVal(prediction);
 	}
-	
-	public Ensemble getHnl() {
-		return (Ensemble) this.hnl.copy();
-	}
-
-	public Ensemble getHnh() {
-		return (Ensemble) this.hnh.copy();
-	}
-
-	public Ensemble getHol() {
-		return (Ensemble) this.hol.copy();
-	}
-
-	public Ensemble getHoh() {
-		return (Ensemble) this.hoh.copy();
-	}
-
-	public int getMode() {
-		return this.mode;
-	}
-
-	public double getAccol() {
-		return this.accol;
-	}
-
-	public double getAccoh() {
-		return this.accoh;
-	}
-
-	public double getAccnl() {
-		return this.accnl;
-	}
-
-	public double getAccnh() {
-		return this.accnh;
-	}
-
-	public double getVarol() {
-		return this.varol;
-	}
-
-	public double getVaroh() {
-		return this.varoh;
-	}
-
-	public double getVarnl() {
-		return this.varnl;
-	}
-
-	public double getVarnh() {
-		return this.varnh;
-	}
-
-	public double getStdol() {
-		return this.stdol;
-	}
-
-	public double getStdoh() {
-		return this.stdoh;
-	}
-
-	public double getStdnl() {
-		return this.stdnl;
-	}
-
-	public double getStdnh() {
-		return this.stdnh;
-	}
-
-	public int getDdmLevel() {
-		return this.ddmLevel;
-	}
-
-	public int getTimeStep() {
-		return this.timeStep;
-	}
 
 	/**
      * Gets the current measurements of this classifier.<br><br>
@@ -369,8 +298,18 @@ public class DDD extends AbstractClassifier {
 		if (this.mode == DDD.AFTER_DRIFT) {
 			this.update(inst);
 		}
-		/* drift ← DetectDrift(hnl, d, pd) */
-		this.detectDrift(inst);
+		if (this.forceDriftOption.getValue() <= 0) {
+			/* drift ← DetectDrift(hnl, d, pd) */
+			this.detectDrift(inst);
+		} else {
+			/* force drift */
+			if (this.timeStep > 0 && (this.timeStep % this.forceDriftOption.getValue()) == 0) {
+				this.ddmLevel = DriftDetectionMethod.DDM_OUTCONTROL_LEVEL;
+			} else {
+				this.ddmLevel = DriftDetectionMethod.DDM_INCONTROL_LEVEL;
+			}
+		}
+		
 		/* if drift == true then */
 		if (this.ddmLevel == DriftDetectionMethod.DDM_OUTCONTROL_LEVEL) {
 			if (this.mode == DDD.BEFORE_DRIFT || (this.mode == DDD.AFTER_DRIFT && this.accnl > this.accoh)) {
@@ -408,10 +347,21 @@ public class DDD extends AbstractClassifier {
 		this.timeStep++;
 	}
 
+    /**
+     * Gets whether this classifier needs a random seed.
+     * Examples of methods that needs a random seed are bagging and boosting.
+     *
+     * @return true if the classifier needs a random seed.
+     */
 	public boolean isRandomizable() {
 		return true;
 	}
-	
+
+    /**
+     * Resets this classifier. It must be similar to
+     * starting a new classifier from scratch.
+     *
+     */
     @Override
     public void resetLearning() {
         this.trainingWeightSeenByModel = 0.0;
@@ -420,21 +370,22 @@ public class DDD extends AbstractClassifier {
         		this.randomSeedOption = new IntOption("randomSeed", 'r', "Seed for random behaviour of the classifier.", this.randomSeed);
         	}
         	this.randomSeedOption.setValue(this.randomSeed);
-			if (this.randomSeedOption.getValue() == 1 && this.randomSeed == 1) {
-				this.randomSeed = (int) System.currentTimeMillis();
-				this.randomSeedOption.setValue(this.randomSeed);
-			}
 			this.classifierRandom = new Random(this.randomSeed);
         }
         resetLearningImpl();
     }
-    
+
+    /**
+     * Sets the seed for random number generation.
+     *
+     * @param s the seed
+     */
     @Override
     public void setRandomSeed(int s) {
     	super.setRandomSeed(s);
         this.classifierRandom.setSeed(s);
     }
-    
+
     public void setClassifierRandom(Random r) {
     	this.classifierRandom = r;
     }
