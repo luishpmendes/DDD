@@ -1,3 +1,5 @@
+moa
 moa.classifiers
 moa.classifiers.core.driftdetection
 moa.classifiers.meta
+moa.evaluation
