@@ -79,6 +79,11 @@ public class DDD extends AbstractClassifier {
 	private double stdoh;
 	private double stdnl;
 	private double stdnh;
+	
+	private double timeStepol;
+	private double timeStepoh;
+	private double timeStepnl;
+	private double timeStepnh;
 
 	private int ddmLevel;
 
@@ -127,50 +132,53 @@ public class DDD extends AbstractClassifier {
 		if (this.hnl.correctlyClassifies(inst)) {
 			accnlex = 1.0;
 		}
-		if (this.timeStep == 0) {
+		if (this.timeStepnl == 0) {
 			this.accnl = accnlex;
 		} else {
-			this.accnl = this.accnl + ((accnlex - this.accnl) / this.timeStep);
+			this.accnl = this.accnl + ((accnlex - this.accnl) / this.timeStepnl);
 		}
-		if (this.timeStep == 0) {
+		if (this.timeStepnl == 0) {
 			this.varnl = 0.0;
 		} else {
-			this.varnl = this.varnl + (((accnlex - tempnl) * (accnlex - this.accnl)) / (this.timeStep - 1));
+			this.varnl = this.varnl + (((accnlex - tempnl) * (accnlex - this.accnl)) / (this.timeStepnl - 1));
 		}
 		this.stdnl = Math.sqrt(this.varnl);
+		this.timeStepnl++;
 		// Update(accol, stdol, hol, d)
 		double tempol = this.accol;
 		double accolex = 0.0;
 		if (this.hol.correctlyClassifies(inst)) {
 			accolex = 1.0;
 		}
-		if (this.timeStep == 0) {
+		if (this.timeStepol == 0) {
 			this.accol = accolex;
 		} else {
-			this.accol = this.accol + ((accolex - this.accol) / this.timeStep);
+			this.accol = this.accol + ((accolex - this.accol) / this.timeStepol);
 		}
-		if (this.timeStep == 0) {
+		if (this.timeStepol == 0) {
 			this.varol = 0.0;
 		} else {
-			this.varol = this.varol + (((accolex - tempol) * (accolex - this.accol)) / (this.timeStep - 1));
+			this.varol = this.varol + (((accolex - tempol) * (accolex - this.accol)) / (this.timeStepol - 1));
 		}
 		this.stdol = Math.sqrt(this.varol);
+		this.timeStepol++;
 		// Update(accoh, stdoh, hoh, d)
 		double tempoh = this.accoh;
 		double accohex = 0.0;
 		if (this.hoh.correctlyClassifies(inst)) {
 			accohex = 1.0;
 		}
-		if (this.timeStep == 0) {
+		if (this.timeStepoh == 0) {
 			this.accoh = accohex;
 		} else {
-			this.accoh = this.accoh + ((accohex - this.accoh) / this.timeStep);
+			this.accoh = this.accoh + ((accohex - this.accoh) / this.timeStepoh);
 		}
-		if (this.timeStep == 0) {
+		if (this.timeStepoh == 0) {
 			this.varoh = 0.0;
 		} else {
-			this.varoh = this.varoh + (((accohex - tempoh) * (accohex - this.accoh)) / (this.timeStep - 1));
+			this.varoh = this.varoh + (((accohex - tempoh) * (accohex - this.accoh)) / (this.timeStepoh - 1));
 		}
+		this.timeStepoh++;
 	}
 	
 	private void detectDrift(Instance inst) {
@@ -207,6 +215,10 @@ public class DDD extends AbstractClassifier {
                 new Measurement("stdoh", this.stdoh),
                 new Measurement("stdnl", this.stdnl),
                 new Measurement("stdnh", this.stdnh),
+                new Measurement("timeStepol", this.timeStepol),
+                new Measurement("timeStepoh", this.timeStepoh),
+                new Measurement("timeStepnl", this.timeStepnl),
+                new Measurement("timeStepnh", this.timeStepnh),
                 new Measurement("ddmLevel", this.ddmLevel),
                 new Measurement("timeStep", this.timeStep)
             };
@@ -281,6 +293,8 @@ public class DDD extends AbstractClassifier {
 		/* standard deviations */
 		this.stdol = this.stdoh = this.stdnl = this.stdnh = 0;
 
+		this.timeStepol = this.timeStepoh = this.timeStepnl = this.timeStepnh = 0;
+
 		this.timeStep = 0;
 	}
 
@@ -324,6 +338,7 @@ public class DDD extends AbstractClassifier {
 			this.hnh.setClassifierRandom(this.classifierRandom);
 			this.accol = this.accoh = this.accnl = this.accnh = 0;
 			this.stdol = this.stdoh = this.stdnl = this.stdnh = 0;
+			this.timeStepol = this.timeStepoh = this.timeStepnl = this.timeStepnh = 0;
 			this.mode = DDD.AFTER_DRIFT;
 		}
 		if (this.mode == DDD.AFTER_DRIFT) {
@@ -372,7 +387,7 @@ public class DDD extends AbstractClassifier {
         	this.randomSeedOption.setValue(this.randomSeed);
 			this.classifierRandom = new Random(this.randomSeed);
         }
-        resetLearningImpl();
+        this.resetLearningImpl();
     }
 
     /**
