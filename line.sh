@@ -1,5 +1,29 @@
 #!/bin/bash
 prime=(2 3 5 7 11 13 17 19 23 29 31 37 41 43 47 53 59 61 67 71 73 79 83 89 97 101 103 107 109 113)
+rm data/ArtificialDataSets/line/dataLineSev1Sp1Test/dataLineSev1Sp1Test*.dump
+rm data/ArtificialDataSets/line/dataLineSev1Sp1Test/dataLineSev1Sp1Test*.out
+rm data/ArtificialDataSets/line/dataLineSev1Sp1Train/dataLineSev1Sp1Train*.dump
+rm data/ArtificialDataSets/line/dataLineSev1Sp1Train/dataLineSev1Sp1Train*.out
+rm data/ArtificialDataSets/line/dataLineSev1Sp2Train/dataLineSev1Sp2Train*.dump
+rm data/ArtificialDataSets/line/dataLineSev1Sp2Train/dataLineSev1Sp2Train*.out
+rm data/ArtificialDataSets/line/dataLineSev1Sp3Train/dataLineSev1Sp3Train*.dump
+rm data/ArtificialDataSets/line/dataLineSev1Sp3Train/dataLineSev1Sp3Train*.out
+rm data/ArtificialDataSets/line/dataLineSev2Sp1Test/dataLineSev2Sp1Test*.dump
+rm data/ArtificialDataSets/line/dataLineSev2Sp1Test/dataLineSev2Sp1Test*.out
+rm data/ArtificialDataSets/line/dataLineSev2Sp1Train/dataLineSev2Sp1Train*.dump
+rm data/ArtificialDataSets/line/dataLineSev2Sp1Train/dataLineSev2Sp1Train*.out
+rm data/ArtificialDataSets/line/dataLineSev2Sp2Train/dataLineSev2Sp2Train*.dump
+rm data/ArtificialDataSets/line/dataLineSev2Sp2Train/dataLineSev2Sp2Train*.out
+rm data/ArtificialDataSets/line/dataLineSev2Sp3Train/dataLineSev2Sp3Train*.dump
+rm data/ArtificialDataSets/line/dataLineSev2Sp3Train/dataLineSev2Sp3Train*.out
+rm data/ArtificialDataSets/line/dataLineSev3Sp1Test/dataLineSev3Sp1Test*.dump
+rm data/ArtificialDataSets/line/dataLineSev3Sp1Test/dataLineSev3Sp1Test*.out
+rm data/ArtificialDataSets/line/dataLineSev3Sp1Train/dataLineSev3Sp1Train*.dump
+rm data/ArtificialDataSets/line/dataLineSev3Sp1Train/dataLineSev3Sp1Train*.out
+rm data/ArtificialDataSets/line/dataLineSev3Sp2Train/dataLineSev3Sp2Train*.dump
+rm data/ArtificialDataSets/line/dataLineSev3Sp2Train/dataLineSev3Sp2Train*.out
+rm data/ArtificialDataSets/line/dataLineSev3Sp3Train/dataLineSev3Sp3Train*.dump
+rm data/ArtificialDataSets/line/dataLineSev3Sp3Train/dataLineSev3Sp3Train*.out
 for i in `seq 1 30`;
 do
     java -cp target/DDD-0.0.1-SNAPSHOT.jar moa.DoTask "EvaluatePrequential -l (meta.DDD -r ${prime[i-1]} -w 1 -l 1 -h 0.005 -e (meta.OnlineBagging -l trees.HoeffdingTree -d 0.005) -d (EarlyDriftDetectionMethod -w 0.95 -d 0.95)) -s (ArffFileStream -f data/ArtificialDataSets/line/dataLineSev1Sp1Test.arff) -e (SimpleClassificationPerformanceEvaluator -r 250) -f 10 -i -1 -d data/ArtificialDataSets/line/dataLineSev1Sp1Test/dataLineSev1Sp1Test$i.dump -o data/ArtificialDataSets/line/dataLineSev1Sp1Test/dataLineSev1Sp1Test$i.out"
