@@ -15,7 +15,7 @@ Running PAKDD:
 weight = 1
 lowDiversity = 1
 highDiversity = 0.005
-baseEnsembleLearner baseLearnerOption =  bayes.NaiveBayes
+baseEnsembleLearner baseLearnerOption = bayes.NaiveBayes
 driftDetectionMethodOption warningOption = 0.75 (gamma)
 driftDetectionMethodOption outControlOption = 0.75 (gamma)
 reset = 16666.67
@@ -25,12 +25,16 @@ java -cp target/DDD-0.0.1-SNAPSHOT.jar moa.DoTask "EvaluatePrequential -l (meta.
 weight = 1
 lowDiversity = 1
 highDiversity = 0.005
-baseEnsembleLearner baseLearnerOption =  MLP
+baseEnsembleLearner baseLearnerOption = MLP
+learning rate = 0.01
+momentum = 0.01
+epochs = 1
+nodes = 10
 driftDetectionMethodOption warningOption = 0.75 (gamma)
 driftDetectionMethodOption outControlOption = 0.75 (gamma)
 reset = 16666.67
 
-java -cp target/DDD-0.0.1-SNAPSHOT.jar moa.DoTask "EvaluatePrequential -l (meta.DDD -w 1 -l 1 -h 0.005 -e (meta.OnlineBagging -l (meta.WEKAClassifier -l weka.classifiers.functions.MultilayerPerceptron) -d 0.005) -d (EarlyDriftDetectionMethod -w 0.75 -d 0.75)) -s (ArffFileStream -f data/PAKDD/Modeling_Data.arff) -e (SimpleClassificationPerformanceEvaluator -r 16666.67) -f 225 -i -1 -d data/PAKDD/Modeling_DataMLP/Modeling_DataMLP.dump -o data/PAKDD/Modeling_DataMLP/Modeling_DataMLP.out"
+java -cp target/DDD-0.0.1-SNAPSHOT.jar moa.DoTask "EvaluatePrequential -l (meta.DDD -w 1 -l 1 -h 0.005 -e (meta.OnlineBagging -l (meta.WEKAClassifier -l (weka.classifiers.functions.MultilayerPerceptron -L 0.01 -M 0.01 -N 1 -H 10)) -d 0.005) -d (EarlyDriftDetectionMethod -w 0.75 -d 0.75)) -s (ArffFileStream -f data/PAKDD/Modeling_Data.arff) -e (SimpleClassificationPerformanceEvaluator -r 16666.67) -f 225 -i -1 -d data/PAKDD/Modeling_DataMLP/Modeling_DataMLP.dump -o data/PAKDD/Modeling_DataMLP/Modeling_DataMLP.out"
 
 
 Running KDD:
@@ -38,7 +42,7 @@ Running KDD:
 weight = 1
 lowDiversity = 1
 highDiversity = 0.005
-baseEnsembleLearner baseLearnerOption =  bayes.NaiveBayes
+baseEnsembleLearner baseLearnerOption = bayes.NaiveBayes
 driftDetectionMethodOption warningOption = 1.15 (gamma)
 driftDetectionMethodOption outControlOption = 1.15 (gamma)
 reset = 164673.67
@@ -48,12 +52,16 @@ java -cp target/DDD-0.0.1-SNAPSHOT.jar moa.DoTask "EvaluatePrequential -l (meta.
 weight = 1
 lowDiversity = 1
 highDiversity = 0.005
-baseEnsembleLearner baseLearnerOption =  MLP
+baseEnsembleLearner baseLearnerOption = MLP
+learning rate = 0.01
+momentum = 0.01
+epochs = 1
+nodes = 10
 driftDetectionMethodOption warningOption = 0.95 (gamma)
 driftDetectionMethodOption outControlOption = 0.95 (gamma)
 reset = 164673.67
 
-java -cp target/DDD-0.0.1-SNAPSHOT.jar moa.DoTask "EvaluatePrequential -l (meta.DDD -w 1 -l 1 -h 0.005 -e (meta.OnlineBagging -l (meta.WEKAClassifier -l weka.classifiers.functions.MultilayerPerceptron) -d 0.005) -d (EarlyDriftDetectionMethod -w 0.95 -d 0.95)) -s (ArffFileStream -f data/kdd/kddcup.data_10_percent_processed.arff) -e (SimpleClassificationPerformanceEvaluator -r 164673.67) -f 225 -i -1 -d data/kdd/kddcup.data_10_percent_processedMLP/kddcup.data_10_percent_processedMLP.dump -o data/kdd/kddcup.data_10_percent_processedMLP/kddcup.data_10_percent_processedMLP.out"
+java -cp target/DDD-0.0.1-SNAPSHOT.jar moa.DoTask "EvaluatePrequential -l (meta.DDD -w 1 -l 1 -h 0.005 -e (meta.OnlineBagging -l (meta.WEKAClassifier -l (weka.classifiers.functions.MultilayerPerceptron -L 0.01 -M 0.01 -N 1 -H 10)) -d 0.005) -d (EarlyDriftDetectionMethod -w 0.95 -d 0.95)) -s (ArffFileStream -f data/kdd/kddcup.data_10_percent_processed.arff) -e (SimpleClassificationPerformanceEvaluator -r 164673.67) -f 225 -i -1 -d data/kdd/kddcup.data_10_percent_processedMLP/kddcup.data_10_percent_processedMLP.dump -o data/kdd/kddcup.data_10_percent_processedMLP/kddcup.data_10_percent_processedMLP.out"
 
 
 Running elecdata:
@@ -61,7 +69,7 @@ Running elecdata:
 weight = 1
 lowDiversity = 1
 highDiversity = 0.1
-baseEnsembleLearner baseLearnerOption =  bayes.NaiveBayes
+baseEnsembleLearner baseLearnerOption = bayes.NaiveBayes
 FA = 45
 reset = 15104
 
@@ -70,11 +78,15 @@ java -cp target/DDD-0.0.1-SNAPSHOT.jar moa.DoTask "EvaluatePrequential -l (meta.
 weight = 1
 lowDiversity = 1
 highDiversity = 0.05
-baseEnsembleLearner baseLearnerOption =  bayes.NaiveBayes
+baseEnsembleLearner baseLearnerOption = MLP
+learning rate = 0.01
+momentum = 0.01
+epochs = 1
+nodes = 10
 FA = 5
 reset = 15104
 
-java -cp target/DDD-0.0.1-SNAPSHOT.jar moa.DoTask "EvaluatePrequential -l (meta.DDD -w 1 -l 1 -h 0.05 -e (meta.OnlineBagging -l bayes.NaiveBayes -d 0.05) -f 5) -s (ArffFileStream -f data/elecdata/elec2.arff) -e (SimpleClassificationPerformanceEvaluator -r 15104) -f 225 -i -1 -d data/elecdata/elec2MLP/elec2MLP.dump -o data/elecdata/elec2MLP/elec2MLP.out"
+java -cp target/DDD-0.0.1-SNAPSHOT.jar moa.DoTask "EvaluatePrequential -l (meta.DDD -w 1 -l 1 -h 0.05 -e (meta.OnlineBagging -l (meta.WEKAClassifier -l (weka.classifiers.functions.MultilayerPerceptron -L 0.01 -M 0.01 -N 1 -H 10)) -d 0.05) -f 5) -s (ArffFileStream -f data/elecdata/elec2.arff) -e (SimpleClassificationPerformanceEvaluator -r 15104) -f 225 -i -1 -d data/elecdata/elec2MLP/elec2MLP.dump -o data/elecdata/elec2MLP/elec2MLP.out"
 
 
 Running bool:
@@ -285,18 +297,3 @@ java -cp target/DDD-0.0.1-SNAPSHOT.jar moa.DoTask "EvaluatePrequential -l (meta.
 java -cp target/DDD-0.0.1-SNAPSHOT.jar moa.DoTask "EvaluatePrequential -l (meta.DDD -w 1 -l 1 -h 0.05 -e (meta.OnlineBagging -l trees.HoeffdingTree -d 0.05) -d (EarlyDriftDetectionMethod -w 0.95 -d 0.95)) -s (ArffFileStream -f data/ArtificialDataSets/sineH/dataSineHSev3Sp2Train.arff) -e (SimpleClassificationPerformanceEvaluator -r 1000) -f 25 -i -1 -d data/ArtificialDataSets/sineH/dataSineHSev3Sp2Train/dataSineHSev3Sp2Train.dump -o data/ArtificialDataSets/sineH/dataSineHSev3Sp2Train/dataSineHSev3Sp2Train.out"
 
 java -cp target/DDD-0.0.1-SNAPSHOT.jar moa.DoTask "EvaluatePrequential -l (meta.DDD -w 1 -l 1 -h 0.05 -e (meta.OnlineBagging -l trees.HoeffdingTree -d 0.05) -d (EarlyDriftDetectionMethod -w 0.95 -d 0.95)) -s (ArffFileStream -f data/ArtificialDataSets/sineH/dataSineHSev3Sp3Train.arff) -e (SimpleClassificationPerformanceEvaluator -r 1000) -f 25 -i -1 -d data/ArtificialDataSets/sineH/dataSineHSev3Sp3Train/dataSineHSev3Sp3Train.dump -o data/ArtificialDataSets/sineH/dataSineHSev3Sp3Train/dataSineHSev3Sp3Train.out"
-
-
-
-run again with the BasicClassificationPerformanceEvaluator, I fixed the dataset
-
-run 30 runs
-run eddm with naive bayes and see if the result obtained are similar
-run on artificial datasets (try to figure out the paramters of the datasets)
-double check code, drift handling after drift detection
-search for mlp on moa
-
-
-remover SimpleClassificationPerformanceEvaluator
-fazer um evaluator pra testar os dataset articiais, resetando a accuracy na metade (quando acontece o drift)
-rodar pelo menos os dataset não-artificiais 30 vezes, tirar a média e desvio padrão e salvar em csv e fazer um gŕafico
