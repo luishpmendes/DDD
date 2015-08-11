@@ -135,12 +135,12 @@ public class DDD extends AbstractClassifier {
 		if (this.timeStepnl == 0) {
 			this.accnl = accnlex;
 		} else {
-			this.accnl = this.accnl + ((accnlex - this.accnl) / this.timeStepnl);
+			this.accnl += ((double) (((double) (accnlex - this.accnl)) / ((double) (this.timeStepnl + 1))));
 		}
 		if (this.timeStepnl == 0) {
 			this.varnl = 0.0;
 		} else {
-			this.varnl = this.varnl + (((accnlex - tempnl) * (accnlex - this.accnl)) / (this.timeStepnl - 1));
+			this.varnl += ((double) (((double) ((accnlex - tempnl) * (accnlex - this.accnl))) / ((double) this.timeStepnl)));
 		}
 		this.stdnl = Math.sqrt(this.varnl);
 		this.timeStepnl++;
@@ -153,12 +153,12 @@ public class DDD extends AbstractClassifier {
 		if (this.timeStepol == 0) {
 			this.accol = accolex;
 		} else {
-			this.accol = this.accol + ((accolex - this.accol) / this.timeStepol);
+			this.accol += ((double) (((double) (accolex - this.accol)) / ((double) (this.timeStepol + 1))));
 		}
 		if (this.timeStepol == 0) {
 			this.varol = 0.0;
 		} else {
-			this.varol = this.varol + (((accolex - tempol) * (accolex - this.accol)) / (this.timeStepol - 1));
+			this.varol += ((double) (((double) ((accolex - tempol) * (accolex - this.accol))) / ((double) this.timeStepol)));
 		}
 		this.stdol = Math.sqrt(this.varol);
 		this.timeStepol++;
@@ -171,13 +171,14 @@ public class DDD extends AbstractClassifier {
 		if (this.timeStepoh == 0) {
 			this.accoh = accohex;
 		} else {
-			this.accoh = this.accoh + ((accohex - this.accoh) / this.timeStepoh);
+			this.accoh += ((double) (((double) (accohex - this.accoh)) / ((double) (this.timeStepoh + 1))));
 		}
 		if (this.timeStepoh == 0) {
 			this.varoh = 0.0;
 		} else {
-			this.varoh = this.varoh + (((accohex - tempoh) * (accohex - this.accoh)) / (this.timeStepoh - 1));
+			this.varoh += ((double) (((double) ((accohex - tempoh) * (accohex - this.accoh))) / ((double) this.timeStepoh)));
 		}
+		this.stdoh = Math.sqrt(this.varoh);
 		this.timeStepoh++;
 	}
 	
@@ -280,12 +281,32 @@ public class DDD extends AbstractClassifier {
 	public void resetLearningImpl() {
 		this.mode = DDD.BEFORE_DRIFT;
 
-		this.hnl = (Ensemble) this.getPreparedClassOption(this.ensembleLearningOption); /* new low diversity */
+		/* new low diversity */
+		if (this.hnl != null) {
+			this.hnl.resetLearning();
+		}
+		this.hnl = null;
+		this.hnl = (Ensemble) this.getPreparedClassOption(this.ensembleLearningOption);
+		this.hnl.resetLearning();
 		this.hnl.setClassifierRandom(this.classifierRandom);
-		this.hnh = (Ensemble) this.getPreparedClassOption(this.ensembleLearningOption); /* new high diversity */
+		/* new high diversity */
+		if (this.hnh != null) {
+			this.hnh.resetLearning();
+		}
+		this.hnh = null;
+		this.hnh = (Ensemble) this.getPreparedClassOption(this.ensembleLearningOption);
+		this.hnh.resetLearning();
 		this.hnh.setClassifierRandom(this.classifierRandom);
-		this.hol = null; /* old low diversity */
-		this.hoh = null; /* old high diversity */
+		/* old low diversity */
+		if (this.hol != null) {
+			this.hol.resetLearning();
+		}
+		this.hol = null;
+		/* old high diversity */
+		if (this.hoh != null) {
+			this.hoh.resetLearning();
+		}
+		this.hoh = null;
 
 		/* accuracies */
 		this.accol = this.accoh = this.accnl = this.accnh = 0;
@@ -327,14 +348,41 @@ public class DDD extends AbstractClassifier {
 		/* if drift == true then */
 		if (this.ddmLevel == DriftDetectionMethod.DDM_OUTCONTROL_LEVEL) {
 			if (this.mode == DDD.BEFORE_DRIFT || (this.mode == DDD.AFTER_DRIFT && this.accnl > this.accoh)) {
-				this.hol = this.hnl;
+				/* hol ← hnl */
+				if (this.hol != null) {
+					this.hol.resetLearning();
+				}
+				this.hol = null;
+				this.hol = (Ensemble) this.hnl.copy();
 			} else {
-				this.hol = this.hoh;
+				/* hol ← hoh */
+				if (this.hol != null) {
+					this.hol.resetLearning();
+				}
+				this.hol = null;
+				this.hol = (Ensemble) this.hoh.copy();
 			}
-			this.hoh = this.hnh;
+			/* hoh ← hnh */
+			if (this.hoh != null) {
+				this.hoh.resetLearning();
+			}
+			this.hoh = null;
+			this.hoh = (Ensemble) this.hnh.copy();
+			/* hnl ← new ensemble */
+			if (this.hnl != null) {
+				this.hnl.resetLearning();
+			}
+			this.hnl = null;
 			this.hnl = (Ensemble) this.getPreparedClassOption(this.ensembleLearningOption);
+			this.hnl.resetLearning();
 			this.hnl.setClassifierRandom(this.classifierRandom);
+			/* hnh ← new ensemble */
+			if (this.hnh != null) {
+				this.hnh.resetLearning();
+			}
+			this.hnh = null;
 			this.hnh = (Ensemble) this.getPreparedClassOption(this.ensembleLearningOption);
+			this.hnh.resetLearning();
 			this.hnh.setClassifierRandom(this.classifierRandom);
 			this.accol = this.accoh = this.accnl = this.accnh = 0;
 			this.stdol = this.stdoh = this.stdnl = this.stdnh = 0;
@@ -346,7 +394,13 @@ public class DDD extends AbstractClassifier {
 				this.mode = DDD.BEFORE_DRIFT;
 			} else {
 				if (this.accoh - this.stdoh > this.accnl + this.stdnl && this.accoh - this.stdoh > this.accol + this.stdol) {
-					this.hnl = this.hoh;
+					/* hnl ← hoh */
+					if (this.hnl != null) {
+						this.hnl.resetLearning();
+					}
+					this.hnl = null;
+					this.hnl = (Ensemble) this.hoh.copy();
+					this.accnl = 0.0;
 					this.accnl = this.accoh;
 					this.mode = DDD.BEFORE_DRIFT;
 				}
