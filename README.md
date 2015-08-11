@@ -1,3 +1,7 @@
+To open the user interface:
+
+java -cp target/DDD-0.0.1-SNAPSHOT.jar moa.gui.GUI
+
 We can use the class moa.tasks.WriteStreamToARFFFile to write a data file:
 
 java -cp moa.jar -javaagent:sizeofag.jar moa.DoTask "WriteStreamToARFFFile -f data.arff -s (ConceptDriftStream -a 1)"

@@ -44,7 +44,6 @@ public class OnlineBagging extends AbstractEnsemble {
         this.ensemble = new Classifier[this.ensembleSizeOption.getValue()];
         Classifier baseLearner = (Classifier) getPreparedClassOption(this.baseLearnerOption);
         baseLearner.resetLearning();
-        baseLearner.setRandomSeed(this.randomSeed);
         for (int i = 0; i < this.ensemble.length; i++) {
             this.ensemble[i] = baseLearner.copy();
         }
