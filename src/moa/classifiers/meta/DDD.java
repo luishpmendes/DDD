@@ -30,8 +30,6 @@ import moa.options.IntOption;
  * @author Luis H. P. Mendes (luishpmendes@gmail.com)
  */
 public class DDD extends AbstractClassifier {
-	private static final long serialVersionUID = 1L;
-
 	public static final int BEFORE_DRIFT = 0;
 	public static final int AFTER_DRIFT = 1;
 
@@ -79,11 +77,11 @@ public class DDD extends AbstractClassifier {
 	private double stdoh;
 	private double stdnl;
 	private double stdnh;
-	
-	private double timeStepol;
-	private double timeStepoh;
-	private double timeStepnl;
-	private double timeStepnh;
+
+	private int timeStepol;
+	private int timeStepoh;
+	private int timeStepnl;
+	private int timeStepnh;
 
 	private int ddmLevel;
 
@@ -181,7 +179,7 @@ public class DDD extends AbstractClassifier {
 		this.stdoh = Math.sqrt(this.varoh);
 		this.timeStepoh++;
 	}
-	
+
 	private void detectDrift(Instance inst) {
 		int trueClass = (int) inst.classValue();
 		boolean prediction = false;

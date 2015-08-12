@@ -19,8 +19,6 @@ import weka.core.Instance;
  * @author Luis H. P. Mendes (luishpmendes@gmail.com)
  */
 public class OnlineBagging extends AbstractEnsemble {
-	private static final long serialVersionUID = 1L;
-
     /**
      * Gets the purpose of this object
      *
